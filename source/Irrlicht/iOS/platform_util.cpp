@@ -41,6 +41,11 @@ FILE* open_file(const char* file_name, const char* read_mode)
     char szFileName[256] = {0};
 	char szTemp[256] = {0};
 	FILE* fp = NULL;
+    
+    // ¾ø¶ÔÂ·¾¶
+    if (file_name[0] == '/') {
+        return fopen(file_name, read_mode);
+    }
 
 	strncpy(szFileName, file_name, sizeof(szFileName) - 1);
     my_strlwr(szFileName);
@@ -83,6 +88,10 @@ FILE* open_file(const char* file_name, const char* read_mode)
 	if (fp) {
 		return fp;
 	}
+    
+#ifdef DEBUG
+    printf("open: %s fail\n", file_name);
+#endif
 
 	return NULL;
 }

@@ -823,8 +823,8 @@ IFileList* CFileSystem::createFileList()
 	CFileList* r = 0;
 	io::path Path = getWorkingDirectory();
 
-#ifdef DEBUG
-    printf("%s\n", Path.c_str());
+#if 0
+    printf("workdir: %s\n", Path.c_str());
 #endif
 
 	Path.replace('\\', '/');

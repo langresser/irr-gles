@@ -76,10 +76,6 @@ void CReadFile::openFile()
 
 	File = open_file(Filename.c_str(), "rb");
 
-#ifdef DEBUG
-    printf("open %s  %s\n", Filename.c_str(), File ? "ok" : "fail");
-#endif
-
 	if (File)
 	{
 		// get FileSize

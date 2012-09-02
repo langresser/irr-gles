@@ -115,10 +115,21 @@ void CMountPointReader::buildDirectory()
 	if (!list)
 		return;
 
+#if 0
+    int n = list->getFileCount();
+    printf("mountpoint: %d   %s\n", n, Path.c_str());
+    for (int i = 0; i < n; ++i) {
+        io::path full = list->getFullFileName(i);
+        printf("  %s\n", full.c_str());
+    }
+#endif
 	const u32 size = list->getFileCount();
 	for (u32 i=0; i < size; ++i)
 	{
 		io::path full = list->getFullFileName(i);
+        int index = full.find(Path.c_str());
+        index += Path.size();
+        full = full.subString(index, full.size() - index);
 
 		if (!list->isDirectory(i))
 		{
