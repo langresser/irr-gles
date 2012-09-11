@@ -3,7 +3,6 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CReadFile.h"
-#include "platform_util.h"
 
 namespace irr
 {
@@ -108,4 +107,3 @@ IReadFile* createReadFile(const io::path& fileName)
 
 } // end namespace io
 } // end namespace irr
-

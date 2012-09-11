@@ -21,7 +21,6 @@
 #include "SIrrCreationParameters.h"
 #include <CoreFoundation/CFRunLoop.h>
 #include "SExposedVideoData.h"
-#include "platform_util.h"
 
 namespace irr
 {
@@ -52,8 +51,6 @@ CIrrDeviceIPhone::CIrrDeviceIPhone(const SIrrlichtCreationParameters& params)
 	#ifdef _DEBUG
 	setDebugName("CIrrDeviceIPhone");
 	#endif
-    
-    initDir();
 	
 	IrrIPhoneDevice.DeviceM = 0;
 	IrrIPhoneDevice.DeviceCPP = this;
@@ -92,13 +89,6 @@ CIrrDeviceIPhone::CIrrDeviceIPhone(const SIrrlichtCreationParameters& params)
 		return;
 
 	createGUIAndScene();
-    
-    Width = 0;
-    Height = 0;
-    MouseX = 0;
-    MouseY = 0;
-    
-    CursorControl = new CCursorControl(this);
 	
 	WindowActive = true;
 }
@@ -118,7 +108,7 @@ bool CIrrDeviceIPhone::createDisplay()
     
 	(*IrrIPhoneDevice.displayCreate)(
 		&IrrIPhoneDevice,
-		CreationParams.WindowId,
+		&CreationParams.WindowId,
 		CreationParams.WindowSize.Width, CreationParams.WindowSize.Height, typeES2);
 	return true;
 }
@@ -234,8 +224,8 @@ void CIrrDeviceIPhone::closeDevice()
 {
 	WindowActive = false;
 	Close = true;
-//	CFRunLoopStop(CFRunLoopGetMain());
-//	while (!Closed) yield();
+	CFRunLoopStop(CFRunLoopGetMain());
+	while (!Closed) yield();
 }
 
 

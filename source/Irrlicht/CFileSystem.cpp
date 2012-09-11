@@ -30,7 +30,7 @@
 		#include <tchar.h>
 	#endif
 #else
-	#if (defined(_IRR_POSIX_API_) || defined(_IRR_OSX_PLATFORM_))
+	#if (defined(_IRR_POSIX_API_) || defined(_IRR_OSX_PLATFORM_) || defined(_IRR_ANDROID_PLATFORM_))
 		#include <stdio.h>
 		#include <stdlib.h>
 		#include <string.h>
@@ -618,8 +618,6 @@ io::path CFileSystem::getAbsolutePath(const io::path& filename) const
 		tmp.replace('\\', '/');
 	#endif
 	return tmp;
-#elif defined (_IRR_IPHONE_PLATFORM_)
-    return io::path(filename);
 #elif (defined(_IRR_POSIX_API_) || defined(_IRR_OSX_PLATFORM_))
 	c8* p=0;
 	c8 fpath[4096];
@@ -725,7 +723,7 @@ io::path& CFileSystem::flattenFilename(io::path& directory, const io::path& root
 				lastWasRealDir=false;
 			}
 		}
-		else if (subdir == _IRR_TEXT("/") && dir.empty())
+		else if (subdir == _IRR_TEXT("/"))
 		{
 			dir = root;
 		}
@@ -822,11 +820,6 @@ IFileList* CFileSystem::createFileList()
 {
 	CFileList* r = 0;
 	io::path Path = getWorkingDirectory();
-
-#if 0
-    printf("workdir: %s\n", Path.c_str());
-#endif
-
 	Path.replace('\\', '/');
 	if (Path.lastChar() != '/')
 		Path.append('/');
@@ -1069,4 +1062,3 @@ IAttributes* CFileSystem::createEmptyAttributes(video::IVideoDriver* driver)
 
 } // end namespace irr
 } // end namespace io
-

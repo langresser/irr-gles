@@ -7,7 +7,6 @@
 #include "irrArray.h"
 #include "fast_atof.h"
 #include "CXMLReaderImpl.h"
-#include "platform_util.h"
 
 namespace irr
 {
@@ -24,7 +23,7 @@ public:
 		: File(0), Size(-1), Close(true)
 	{
 		// open file
-		File = open_file(filename, "rb");
+		File = fopen(filename, "rb");
 
 		if (File)
 			getFileSize();

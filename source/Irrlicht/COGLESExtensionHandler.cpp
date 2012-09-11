@@ -176,7 +176,7 @@ void COGLES1ExtensionHandler::initExtensions(COGLES1Driver* driver,
 	// typo in the simulator (note the postfixed s)
 	if (extensions.find("GL_IMG_user_clip_planes"))
 			FeatureAvailable[IRR_IMG_user_clip_plane] = true;
-
+	
 	{
 		const u32 size = extensions.size()+1;
 		c8* str = new c8[size];
