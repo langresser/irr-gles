@@ -109,6 +109,28 @@ CWADReader::CWADReader(IReadFile* file, bool ignoreCase, bool ignorePaths)
 
 		sort();
 	}
+
+#if 0
+	for ( u32 i = 0; i < FileList.size(); ++i )
+	{
+		SWADFileEntry &e = FileList[i];
+		char buf[128];
+		snprintf ( buf, 128, "c:\\h2\\%s", e.wadFileName.c_str() );
+
+		createDir ( buf );
+		FILE * f = fopen ( buf, "wb" );
+		if ( 0 == f )
+			continue;
+
+		u8 * mem = new u8 [ e.header.disksize ];
+		File->seek ( e.header.filepos );
+		File->read ( mem, e.header.disksize );
+		fwrite ( mem, e.header.disksize, 1, f );
+		delete [] mem;
+		fclose ( f );
+	}
+#endif
+
 }
 
 

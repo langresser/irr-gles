@@ -24,7 +24,7 @@ struct MIrrIPhoneDevice
 	/* The *display* functions call into the Obj-C instance. */
 
 	void (*displayCreate)(struct MIrrIPhoneDevice * dev,
-			void* window, int w, int h, bool type);
+			void** window, int w, int h, bool type);
 	void (*displayInit)(struct MIrrIPhoneDevice * dev,
 			void** context, void** view);
 	void (*displayBegin)(struct MIrrIPhoneDevice * dev);
@@ -123,98 +123,7 @@ namespace irr
 		{
 			return EIDT_OSX;
 		}
-        
-        class CCursorControl : public gui::ICursorControl
-		{
-		public:
-            
-			CCursorControl(CIrrDeviceIPhone* dev)
-            : Device(dev), IsVisible(true)
-			{
-			}
-            
-			//! Changes the visible state of the mouse cursor.
-			virtual void setVisible(bool visible)
-			{
-				IsVisible = visible;
-			}
-            
-			//! Returns if the cursor is currently visible.
-			virtual bool isVisible() const
-			{
-				return IsVisible;
-			}
-            
-			//! Sets the new position of the cursor.
-			virtual void setPosition(const core::position2d<f32> &pos)
-			{
-				setPosition(pos.X, pos.Y);
-			}
-            
-			//! Sets the new position of the cursor.
-			virtual void setPosition(f32 x, f32 y)
-			{
-				setPosition((s32)(x*Device->Width), (s32)(y*Device->Height));
-			}
-            
-			//! Sets the new position of the cursor.
-			virtual void setPosition(const core::position2d<s32> &pos)
-			{
-				setPosition(pos.X, pos.Y);
-			}
-            
-			//! Sets the new position of the cursor.
-			virtual void setPosition(s32 x, s32 y)
-			{
-                Device->MouseX = x;
-                Device->MouseY = y;
-			}
-            
-			//! Returns the current position of the mouse cursor.
-			virtual const core::position2d<s32>& getPosition()
-			{
-				updateCursorPos();
-				return CursorPos;
-			}
-            
-			//! Returns the current position of the mouse cursor.
-			virtual core::position2d<f32> getRelativePosition()
-			{
-				updateCursorPos();
-				return core::position2d<f32>(CursorPos.X / (f32)Device->Width,
-                                             CursorPos.Y / (f32)Device->Height);
-			}
-            
-			virtual void setReferenceRect(core::rect<s32>* rect=0)
-			{
-			}
-            
-		private:
-            
-			void updateCursorPos()
-			{
-				CursorPos.X = Device->MouseX;
-				CursorPos.Y = Device->MouseY;
-                
-				if (CursorPos.X < 0)
-					CursorPos.X = 0;
-				if (CursorPos.X > (s32)Device->Width)
-					CursorPos.X = Device->Width;
-				if (CursorPos.Y < 0)
-					CursorPos.Y = 0;
-				if (CursorPos.Y > (s32)Device->Height)
-					CursorPos.Y = Device->Height;
-			}
-            
-			CIrrDeviceIPhone* Device;
-			core::position2d<s32> CursorPos;
-			bool IsVisible;
-		};
 
-        int MouseX;
-        int MouseY;
-        int Width;
-        int Height;
 	private:
 		
 		MIrrIPhoneDevice IrrIPhoneDevice;

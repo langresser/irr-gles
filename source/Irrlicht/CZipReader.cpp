@@ -586,12 +586,7 @@ IReadFile* CZipReader::createAndOpenFile(u32 index)
 			delete [] decryptedBuf;
 			return 0;
 		}
-
-        io::path fullPath = File->getFileName();
-        fullPath = fullPath.subString(0, fullPath.findLast('/') + 1);
-        fullPath += Files[index].FullName;
-        
-		decrypted = io::createMemoryReadFile(decryptedBuf, decryptedSize, fullPath, true);
+		decrypted = io::createMemoryReadFile(decryptedBuf, decryptedSize, Files[index].FullName, true);
 		actualCompressionMethod = (e.header.Sig & 0xffff);
 #if 0
 		if ((e.header.Sig & 0xff000000)==0x01000000)
@@ -684,12 +679,8 @@ IReadFile* CZipReader::createAndOpenFile(u32 index)
 				delete [] pBuf;
 				return 0;
 			}
-			else {
-                io::path fullPath = File->getFileName();
-                fullPath = fullPath.subString(0, fullPath.findLast('/') + 1);
-                fullPath += Files[index].FullName;
-				return io::createMemoryReadFile(pBuf, uncompressedSize, fullPath, true);
-            }
+			else
+				return io::createMemoryReadFile(pBuf, uncompressedSize, Files[index].FullName, true);
 
 			#else
 			return 0; // zlib not compiled, we cannot decompress the data.
@@ -759,12 +750,8 @@ IReadFile* CZipReader::createAndOpenFile(u32 index)
 				delete [] pBuf;
 				return 0;
 			}
-			else {
-                io::path fullPath = File->getFileName();
-                fullPath = fullPath.subString(0, fullPath.findLast('/') + 1);
-                fullPath += Files[index].FullName;
-				return io::createMemoryReadFile(pBuf, uncompressedSize, fullPath, true);
-            }
+			else
+				return io::createMemoryReadFile(pBuf, uncompressedSize, Files[index].FullName, true);
 
 			#else
 			os::Printer::log("bzip2 decompression not supported. File cannot be read.", ELL_ERROR);
@@ -826,12 +813,8 @@ IReadFile* CZipReader::createAndOpenFile(u32 index)
 				delete [] pBuf;
 				return 0;
 			}
-			else {
-                io::path fullPath = File->getFileName();
-                fullPath = fullPath.subString(0, fullPath.findLast('/') + 1);
-                fullPath += Files[index].FullName;
-				return io::createMemoryReadFile(pBuf, uncompressedSize, fullPath, true);
-            }
+			else
+				return io::createMemoryReadFile(pBuf, uncompressedSize, Files[index].FullName, true);
 
 			#else
 			os::Printer::log("lzma decompression not supported. File cannot be read.", ELL_ERROR);

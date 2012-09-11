@@ -17,8 +17,6 @@
 @interface IrrIPhoneView : UIView
 {
     irr::CIrrDeviceIPhone* dev;
-    BOOL animating;
-    id displayLink;
 }
 //@property (nonatomic) id * dev;
 - (void) setDevice:(struct irr::MIrrIPhoneDevice*)device;
@@ -30,54 +28,9 @@
 	return [CAEAGLLayer class];
 }
 
-- (id)initWithFrame:(CGRect)frame
-{    
-    if ((self = [super initWithFrame:frame]))
-    {
-        // Get the layer
-        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-        
-        eaglLayer.opaque = TRUE;
-        eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
-    }
-    
-    return self;
-}
-
-
 - (BOOL) isMultipleTouchEnabled
 {
 	return YES;
-}
-
-- (void)startAnimation
-{
-    if (!animating)
-    {
-        displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(drawView)];
-        [displayLink setFrameInterval:1000/60];
-        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        
-        animating = TRUE;
-    }
-}
-
-extern void irrGameLoop();
--(void)drawView
-{
-    irrGameLoop();
-}
-
-- (void)stopAnimation
-{
-    if (animating)
-    {
-        [displayLink invalidate];
-        displayLink = nil;
-        
-        animating = FALSE;
-    }
 }
 
 - (void) setDevice:(struct irr::MIrrIPhoneDevice*)device
@@ -226,7 +179,7 @@ extern void irrGameLoop();
 @end
 
 
-@interface IrrIPhoneDevice : NSObject
+@interface IrrIPhoneDevice : NSObject <UIApplicationDelegate>
 {
 	@public
 	
@@ -236,7 +189,10 @@ extern void irrGameLoop();
 }
 - (id) initWithDevice: (struct irr::MIrrIPhoneDevice*) device;
 - (void) dealloc;
-- (void) displayCreateInWindow: (UIViewController*) window Width: (int) w Height: (int) h OGLESType: (bool) type;
+- (void) applicationWillResignActive: (UIApplication *) application;
+- (void) applicationDidBecomeActive: (UIApplication *) application;
+- (void) applicationWillTerminate: (UIApplication *) application;
+- (void) displayCreateInWindow: (UIWindow**) window Width: (int) w Height: (int) h OGLESType: (bool) type;
 - (void) displayInitialize: (EAGLContext**) context_ View: (IrrIPhoneView**) view_;
 - (void) displayBegin;
 - (void) displayEnd;
@@ -258,8 +214,21 @@ extern void irrGameLoop();
 {
 	[super dealloc];
 }
-
-- (void) displayCreateInWindow: (UIViewController*) window Width: (int) w Height: (int) h OGLESType: (bool) type
+- (void) applicationWillResignActive: (UIApplication *) application
+{
+	// Pause rendering.
+	(*(dev->onWindowActive))(dev,0);
+}
+- (void) applicationDidBecomeActive: (UIApplication *) application
+{
+	// Resume after non-active pause of rendering.
+	(*(dev->onWindowActive))(dev,1);
+}
+- (void) applicationWillTerminate: (UIApplication *) application
+{
+	(*(dev->onTerminate))(dev);
+}
+- (void) displayCreateInWindow: (UIWindow**) window Width: (int) w Height: (int) h OGLESType: (bool) type
 {
 	// Create our view.
 	CGRect rect;
@@ -269,14 +238,11 @@ extern void irrGameLoop();
 	rect.size.height = h;
     view = [[IrrIPhoneView alloc] initWithFrame: rect];
 	view.layer.opaque = YES;
-	if (nil != window)
+	if (nil != *window)
 	{
-		[window.view addSubview:view];
+		[(*window) addSubview: view];
 	}
-
-    ((irr::CIrrDeviceIPhone*)dev->DeviceCPP)->Width = w;
-    ((irr::CIrrDeviceIPhone*)dev->DeviceCPP)->Height = h;
-
+    
     [view setDevice:dev];
 	
 	// Create the GL context now, so that the driver initializetion
@@ -287,8 +253,6 @@ extern void irrGameLoop();
         context = [[EAGLContext alloc] initWithAPI: kEAGLRenderingAPIOpenGLES1];
     
 	[EAGLContext setCurrentContext: context];
-    
-    [view startAnimation];
 }
 - (void) displayInitialize: (EAGLContext**) context_ View: (IrrIPhoneView**) view_
 {
@@ -319,9 +283,9 @@ extern void irrGameLoop();
 @end
 
 void irr_device_iphone_display_create(struct irr::MIrrIPhoneDevice * dev,
-	void* window, int w, int h, bool type)
+	void** window, int w, int h, bool type)
 {
-	[((IrrIPhoneDevice*)dev->DeviceM) displayCreateInWindow: (UIViewController*)window Width: w Height: h OGLESType: type];
+	[((IrrIPhoneDevice*)dev->DeviceM) displayCreateInWindow: (UIWindow**)window Width: w Height: h OGLESType: type];
 }
 
 void irr_device_iphone_display_init(struct irr::MIrrIPhoneDevice * dev,

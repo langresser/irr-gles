@@ -1,0 +1,9 @@
+
+*.obj
+*.tlog
+*.log
+*.res
+*.lastbuildstate
+*.manifest
+*.rc
+*.pdb

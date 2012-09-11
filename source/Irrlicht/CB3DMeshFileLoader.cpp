@@ -1027,9 +1027,6 @@ bool CB3DMeshFileLoader::readChunkBRUS()
 
 void CB3DMeshFileLoader::loadTextures(SB3dMaterial& material) const
 {
-#ifdef DEBUG
-    printf("loadTexture of %s\n", B3DFile->getFileName().c_str());
-#endif
 	const bool previous32BitTextureFlag = SceneManager->getVideoDriver()->getTextureCreationFlag(video::ETCF_ALWAYS_32_BIT);
 	SceneManager->getVideoDriver()->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 

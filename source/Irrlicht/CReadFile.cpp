@@ -3,7 +3,6 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CReadFile.h"
-#include "platform_util.h"
 
 namespace irr
 {
@@ -74,10 +73,10 @@ void CReadFile::openFile()
 		return;
 	}
 
-	File = open_file(Filename.c_str(), "rb");
-
-#ifdef DEBUG
-    printf("open %s  %s\n", Filename.c_str(), File ? "ok" : "fail");
+#if defined ( _IRR_WCHAR_FILESYSTEM )
+	File = _wfopen(Filename.c_str(), L"rb");
+#else
+	File = fopen(Filename.c_str(), "rb");
 #endif
 
 	if (File)

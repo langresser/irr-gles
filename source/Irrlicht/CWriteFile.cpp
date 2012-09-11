@@ -4,7 +4,6 @@
 
 #include "CWriteFile.h"
 #include <stdio.h>
-#include "platform_util.h"
 
 namespace irr
 {
@@ -82,7 +81,11 @@ void CWriteFile::openFile(bool append)
 		return;
 	}
 
-	File = open_file(Filename.c_str(), append ? "ab" : "wb");
+#if defined(_IRR_WCHAR_FILESYSTEM)
+	File = _wfopen(Filename.c_str(), append ? L"ab" : L"wb");
+#else
+	File = fopen(Filename.c_str(), append ? "ab" : "wb");
+#endif
 
 	if (File)
 	{

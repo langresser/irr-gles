@@ -119,6 +119,7 @@ void CMountPointReader::buildDirectory()
 	for (u32 i=0; i < size; ++i)
 	{
 		io::path full = list->getFullFileName(i);
+		full = full.subString(Path.size(), full.size() - Path.size());
 
 		if (!list->isDirectory(i))
 		{
