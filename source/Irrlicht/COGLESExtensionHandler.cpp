@@ -167,7 +167,7 @@ void COGLES1ExtensionHandler::initExtensions(COGLES1Driver* driver,
 	os::Printer::log(eglExtensions.c_str());
 #endif
 	const core::stringc stringVer(glGetString(GL_VERSION));
-	CommonProfile = (stringVer[11]=='M');
+	CommonProfile = true;//(stringVer[11]=='M');
 	const f32 ogl_ver = core::fast_atof(stringVer.c_str()+13);
 	Version = static_cast<u16>(core::floor32(ogl_ver)*100+core::round32(core::fract(ogl_ver)*10.0f));
 	core::stringc extensions = glGetString(GL_EXTENSIONS);

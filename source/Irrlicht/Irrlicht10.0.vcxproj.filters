@@ -2300,6 +2300,9 @@
     <ClCompile Include="CSMFMeshFileLoader.cpp">
       <Filter>Irrlicht\scene\loaders</Filter>
     </ClCompile>
+    <ClCompile Include="iOS\platform_util.cpp">
+      <Filter>Irrlicht</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Irrlicht.rc" />

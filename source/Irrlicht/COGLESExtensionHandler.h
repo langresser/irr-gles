@@ -13,7 +13,7 @@
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES1/glext.h>
 #else
-#include <GLES/egl.h>
+#include <EGL/egl.h>
 #include <GLES/gl.h>
 // seems to be missing...
 typedef char GLchar;

@@ -26,11 +26,11 @@
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES1/glext.h>
 #else
-#include <GLES/egl.h>
+#include <EGL/egl.h>
 #include <GLES/gl.h>
 #endif
 #ifdef _MSC_VER
-	#pragma comment(lib, "libgles_cm.lib")
+	#pragma comment(lib, "libglesv1_cm.lib")
 #endif
 #include "COGLESExtensionHandler.h"
 

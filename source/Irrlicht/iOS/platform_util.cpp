@@ -1,9 +1,9 @@
 #include "platform_util.h"
 #include <locale>
 #include <string.h>
-#include "iosUtil.h"
 
 #ifdef __IPHONEOS__
+#include "iosUtil.h"
 char g_application_dir[256] = {0};
 char g_resource_dir[256] = "../Documents/";
 #elif defined __ANDROID__
@@ -89,7 +89,7 @@ FILE* open_file(const char* file_name, const char* read_mode)
 		return fp;
 	}
     
-#ifdef DEBUG
+#ifdef _DEBUG
     printf("open: %s fail\n", file_name);
 #endif
 
@@ -98,6 +98,7 @@ FILE* open_file(const char* file_name, const char* read_mode)
 
 #ifdef WIN32
 #include <windows.h>
+#pragma comment(lib, "winmm.lib")
 #else
 #include <sys/time.h>
 #endif

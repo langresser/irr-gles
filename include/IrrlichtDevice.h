@@ -170,7 +170,9 @@ namespace irr
 		\return True if window is active. */
 		virtual bool isWindowActive() const = 0;
         
+#ifndef WIN32
         virtual void setWindowActive(bool active) = 0;
+#endif
 
 		//! Checks if the Irrlicht window has focus
 		/** \return True if window has focus. */
