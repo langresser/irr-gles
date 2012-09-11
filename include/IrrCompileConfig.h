@@ -45,7 +45,7 @@
 //! different library versions without having to change the sources.
 //! Example: NO_IRR_COMPILE_WITH_X11_ would disable X11
 
-#define _IRR_ANDROID_PLATFORM_
+//#define _IRR_ANDROID_PLATFORM_
 
 //! Uncomment this line to compile with the SDL device
 //#define _IRR_COMPILE_WITH_SDL_DEVICE_
@@ -122,6 +122,8 @@
 #define _IRR_COMPILE_WITH_X11_DEVICE_
 #endif
 
+#define _IRR_COMPILE_WITH_OGLES1_
+#define _IRR_COMPILE_WITH_OGLES2_
 
 //! Define _IRR_COMPILE_WITH_JOYSTICK_SUPPORT_ if you want joystick events.
 #define _IRR_COMPILE_WITH_JOYSTICK_EVENTS_

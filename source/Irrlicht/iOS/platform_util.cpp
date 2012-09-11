@@ -38,6 +38,17 @@ std::string getFullPath(const char* fileName)
 
 FILE* open_file(const char* file_name, const char* read_mode)
 {
+#ifdef WIN32
+	FILE* fpx = fopen(file_name, read_mode);
+	if (fpx) {
+		return fpx;
+	}
+#ifdef _DEBUG
+	printf("open: %s fail\n", file_name);
+#endif
+	return NULL;
+#endif
+
     char szFileName[256] = {0};
 	char szTemp[256] = {0};
 	FILE* fp = NULL;

@@ -18,11 +18,8 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #else
-<<<<<<< HEAD
+
 #include <EGL/egl.h>
-=======
-#include <GLES/egl.h>
->>>>>>> init
 #include <GLES/gl.h>
 #endif
 

@@ -126,10 +126,15 @@ void CMountPointReader::buildDirectory()
 	const u32 size = list->getFileCount();
 	for (u32 i=0; i < size; ++i)
 	{
+#ifndef WIN32
 		io::path full = list->getFullFileName(i);
         int index = full.find(Path.c_str());
         index += Path.size();
         full = full.subString(index, full.size() - index);
+#else
+		io::path full = list->getFullFileName(i);
+		full = full.subString(Path.size(), full.size() - Path.size());
+#endif
 
 		if (!list->isDirectory(i))
 		{
