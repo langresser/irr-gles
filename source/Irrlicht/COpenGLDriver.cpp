@@ -655,7 +655,8 @@ COpenGLDriver::~COpenGLDriver()
 bool COpenGLDriver::genericDriverInit()
 {
 	Name=L"OpenGL ";
-	Name.append(glGetString(GL_VERSION));
+	const GLubyte* name = glGetString(GL_VERSION);
+	Name.append(name);
 	s32 pos=Name.findNext(L' ', 7);
 	if (pos != -1)
 		Name=Name.subString(0, pos);

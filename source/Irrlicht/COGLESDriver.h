@@ -16,7 +16,6 @@
 #include "SIrrCreationParameters.h"
 
 #ifdef _IRR_COMPILE_WITH_OGLES1_
-
 #include "CNullDriver.h"
 #include "IMaterialRendererServices.h"
 #include "EDriverFeatures.h"
@@ -33,9 +32,7 @@
 #include <EGL/egl.h>
 #include <GLES/gl.h>
 #endif
-#ifdef _MSC_VER
-	#pragma comment(lib, "libglesv1_cm.lib")
-#endif
+
 #include "COGLESExtensionHandler.h"
 
 namespace irr
