@@ -15,7 +15,7 @@
 
 #ifdef WIN32
 #pragma comment(lib, "libEGL.lib")
-#pragma comment(lib, "libglesv1_cm.lib")
+//#pragma comment(lib, "libglesv1_cm.lib")
 #endif
 
 #ifdef _IRR_COMPILE_WITH_SDL_DEVICE_

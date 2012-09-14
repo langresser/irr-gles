@@ -327,7 +327,7 @@
     </ProjectReference>
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\..\stk\Irrlicht.dll</OutputFile>
       <AdditionalLibraryDirectories>E:\llvm\3rdframework\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libci.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -1097,12 +1097,6 @@
     <ClInclude Include="COpenGLTexture.h" />
     <ClInclude Include="glext.h" />
     <ClInclude Include="wglext.h" />
-    <ClInclude Include="CD3D8Driver.h" />
-    <ClInclude Include="CD3D8MaterialRenderer.h" />
-    <ClInclude Include="CD3D8NormalMapRenderer.h" />
-    <ClInclude Include="CD3D8ParallaxMapRenderer.h" />
-    <ClInclude Include="CD3D8ShaderMaterialRenderer.h" />
-    <ClInclude Include="CD3D8Texture.h" />
     <ClInclude Include="CColorConverter.h" />
     <ClInclude Include="CFPSCounter.h" />
     <ClInclude Include="CImage.h" />
@@ -1125,13 +1119,6 @@
     <ClInclude Include="CImageLoaderRGB.h" />
     <ClInclude Include="CImageLoaderTGA.h" />
     <ClInclude Include="CImageLoaderWAL.h" />
-    <ClInclude Include="CD3D9Driver.h" />
-    <ClInclude Include="CD3D9HLSLMaterialRenderer.h" />
-    <ClInclude Include="CD3D9MaterialRenderer.h" />
-    <ClInclude Include="CD3D9NormalMapRenderer.h" />
-    <ClInclude Include="CD3D9ParallaxMapRenderer.h" />
-    <ClInclude Include="CD3D9ShaderMaterialRenderer.h" />
-    <ClInclude Include="CD3D9Texture.h" />
     <ClInclude Include="CDepthBuffer.h" />
     <ClInclude Include="CSoftware2MaterialRenderer.h" />
     <ClInclude Include="CSoftwareDriver2.h" />
@@ -1354,11 +1341,6 @@
     <ClCompile Include="COpenGLShaderMaterialRenderer.cpp" />
     <ClCompile Include="COpenGLSLMaterialRenderer.cpp" />
     <ClCompile Include="COpenGLTexture.cpp" />
-    <ClCompile Include="CD3D8Driver.cpp" />
-    <ClCompile Include="CD3D8NormalMapRenderer.cpp" />
-    <ClCompile Include="CD3D8ParallaxMapRenderer.cpp" />
-    <ClCompile Include="CD3D8ShaderMaterialRenderer.cpp" />
-    <ClCompile Include="CD3D8Texture.cpp" />
     <ClCompile Include="CColorConverter.cpp" />
     <ClCompile Include="CFPSCounter.cpp" />
     <ClCompile Include="CImage.cpp" />
@@ -1380,12 +1362,6 @@
     <ClCompile Include="CImageLoaderRGB.cpp" />
     <ClCompile Include="CImageLoaderTGA.cpp" />
     <ClCompile Include="CImageLoaderWAL.cpp" />
-    <ClCompile Include="CD3D9Driver.cpp" />
-    <ClCompile Include="CD3D9HLSLMaterialRenderer.cpp" />
-    <ClCompile Include="CD3D9NormalMapRenderer.cpp" />
-    <ClCompile Include="CD3D9ParallaxMapRenderer.cpp" />
-    <ClCompile Include="CD3D9ShaderMaterialRenderer.cpp" />
-    <ClCompile Include="CD3D9Texture.cpp" />
     <ClCompile Include="CBurningShader_Raster_Reference.cpp" />
     <ClCompile Include="CDepthBuffer.cpp" />
     <ClCompile Include="CSoftwareDriver2.cpp" />

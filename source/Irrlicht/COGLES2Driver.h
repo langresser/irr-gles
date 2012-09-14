@@ -35,11 +35,6 @@
 #include "IMaterialRendererServices.h"
 #include "EDriverFeatures.h"
 #include "fast_atof.h"
-
-#ifdef _MSC_VER
-#pragma comment(lib, "libEGL.lib")
-#pragma comment(lib, "libGLESv2.lib")
-#endif
 #include "COGLES2ExtensionHandler.h"
 
 namespace irr

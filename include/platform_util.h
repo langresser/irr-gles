@@ -5,7 +5,9 @@
 
 #ifndef WIN32
 #else
+#ifndef snprintf
 #define snprintf _snprintf
+#endif
 #endif
 
 extern char g_resource_dir[256];

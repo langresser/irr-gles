@@ -26,6 +26,11 @@
 #include <GLES2/gl2.h>
 #endif
 
+#ifdef _MSC_VER
+#pragma comment(lib, "libEGL.lib")
+//#pragma comment(lib, "libGLESv2.lib")
+#endif
+
 namespace irr
 {
 namespace video
