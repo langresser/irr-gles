@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -151,7 +151,7 @@ bool COpenGLDriver::initDriver(CIrrDeviceWin32* device)
 		0,                                         // No Accumulation Buffer
 		0, 0, 0, 0,	                               // Accumulation Bits Ignored
 		Params.ZBufferBits,                        // Z-Buffer (Depth Buffer)
-		Params.Stencilbuffer ? 1 : 0,              // Stencil Buffer Depth
+		BYTE(Params.Stencilbuffer ? 1 : 0),        // Stencil Buffer Depth
 		0,                                         // No Auxiliary Buffer
 		PFD_MAIN_PLANE,                            // Main Drawing Layer
 		0,                                         // Reserved
@@ -946,21 +946,23 @@ void COpenGLDriver::setTransform(E_TRANSFORMATION_STATE state, const core::matri
 		{
 			// OpenGL only has a model matrix, view and world is not existent. so lets fake these two.
 			glMatrixMode(GL_MODELVIEW);
-			glLoadMatrixf((Matrices[ETS_VIEW] * Matrices[ETS_WORLD]).pointer());
+
+			// first load the viewing transformation for user clip planes
+			glLoadMatrixf((Matrices[ETS_VIEW]).pointer());
+
 			// we have to update the clip planes to the latest view matrix
 			for (u32 i=0; i<MaxUserClipPlanes; ++i)
 				if (UserClipPlanes[i].Enabled)
 					uploadClipPlane(i);
+
+			// now the real model-view matrix
+			glMultMatrixf(Matrices[ETS_WORLD].pointer());
 		}
 		break;
 	case ETS_PROJECTION:
 		{
 			glMatrixMode(GL_PROJECTION);
 			glLoadMatrixf(mat.pointer());
-			// we have to update the clip planes to the latest view matrix
-			for (u32 i=0; i<MaxUserClipPlanes; ++i)
-				if (UserClipPlanes[i].Enabled)
-					uploadClipPlane(i);
 		}
 		break;
 	case ETS_COUNT:
@@ -1013,7 +1015,7 @@ bool COpenGLDriver::updateVertexHardwareBuffer(SHWBufferLink_opengl *HWBuffer)
 	core::array<c8> buffer;
 	if (!FeatureAvailable[IRR_ARB_vertex_array_bgra] && !FeatureAvailable[IRR_EXT_vertex_array_bgra])
 	{
-		//buffer vertex data, and convert colours...
+		//buffer vertex data, and convert colors...
 		buffer.set_used(vertexSize * vertexCount);
 		memcpy(buffer.pointer(), vertices, vertexSize * vertexCount);
 		vbuf = buffer.const_pointer();
@@ -2421,7 +2423,7 @@ void COpenGLDriver::drawPixel(u32 x, u32 y, const SColor &color)
 
 bool COpenGLDriver::setActiveTexture(u32 stage, const video::ITexture* texture)
 {
-	if (stage >= MaxTextureUnits)
+	if (stage >= MaxSupportedTextures)
 		return false;
 
 	if (CurrentTexture[stage]==texture)
@@ -2460,7 +2462,7 @@ bool COpenGLDriver::setActiveTexture(u32 stage, const video::ITexture* texture)
 bool COpenGLDriver::disableTextures(u32 fromStage)
 {
 	bool result=true;
-	for (u32 i=fromStage; i<MaxTextureUnits; ++i)
+	for (u32 i=fromStage; i<MaxSupportedTextures; ++i)
 		result &= setActiveTexture(i, 0);
 	return result;
 }
@@ -2548,7 +2550,7 @@ bool COpenGLDriver::testGLError()
 		os::Printer::log("GL_INVALID_FRAMEBUFFER_OPERATION", ELL_ERROR); break;
 #endif
 	};
-	_IRR_DEBUG_BREAK_IF(true);
+//	_IRR_DEBUG_BREAK_IF(true);
 	return true;
 #else
 	return false;
@@ -3446,6 +3448,8 @@ void COpenGLDriver::assignHardwareLight(u32 lightIndex)
 		glLightf(lidx, GL_SPOT_EXPONENT, 0.0f);
 		glLightf(lidx, GL_SPOT_CUTOFF, 180.0f);
 	break;
+	default:
+	break;
 	}
 
 	// set diffuse color
@@ -3580,7 +3584,7 @@ void COpenGLDriver::drawStencilShadowVolume(const core::array<core::vector3df>& 
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_FOG);
-	glDepthFunc(GL_LEQUAL);
+	glDepthFunc(GL_LESS);
 	glDepthMask(GL_FALSE); // no depth buffer writing
 	if (debugDataVisible & scene::EDS_MESH_WIRE_OVERLAY)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -3594,8 +3598,6 @@ void COpenGLDriver::drawStencilShadowVolume(const core::array<core::vector3df>& 
 	glVertexPointer(3,GL_FLOAT,sizeof(core::vector3df),triangles.const_pointer());
 	glStencilMask(~0);
 	glStencilFunc(GL_ALWAYS, 0, ~0);
-	glPolygonOffset(-1.f,-1.f);
-	glEnable(GL_POLYGON_OFFSET_FILL);
 
 	GLenum incr = GL_INCR;
 	GLenum decr = GL_DECR;
@@ -3876,6 +3878,12 @@ bool COpenGLDriver::setVertexShaderConstant(const c8* name, const f32* floats, i
 	return setPixelShaderConstant(name, floats, count);
 }
 
+//! Bool interface for the above.
+bool COpenGLDriver::setVertexShaderConstant(const c8* name, const bool* bools, int count)
+{
+	return setPixelShaderConstant(name, bools, count);
+}
+
 //! Int interface for the above.
 bool COpenGLDriver::setVertexShaderConstant(const c8* name, const s32* ints, int count)
 {
@@ -3884,6 +3892,13 @@ bool COpenGLDriver::setVertexShaderConstant(const c8* name, const s32* ints, int
 
 //! Sets a constant for the pixel shader based on a name.
 bool COpenGLDriver::setPixelShaderConstant(const c8* name, const f32* floats, int count)
+{
+	os::Printer::log("Error: Please call services->setPixelShaderConstant(), not VideoDriver->setPixelShaderConstant().");
+	return false;
+}
+
+//! Bool interface for the above.
+bool COpenGLDriver::setPixelShaderConstant(const c8* name, const bool* bools, int count)
 {
 	os::Printer::log("Error: Please call services->setPixelShaderConstant(), not VideoDriver->setPixelShaderConstant().");
 	return false;
@@ -4120,7 +4135,8 @@ bool COpenGLDriver::setRenderTarget(video::ITexture* texture, bool clearBackBuff
 #endif
 
 	// check if we should set the previous RT back
-	if (RenderTargetTexture != texture)
+	if ((RenderTargetTexture != texture) ||
+		(CurrentTarget==ERT_MULTI_RENDER_TEXTURES))
 	{
 		setActiveTexture(0, 0);
 		ResetRenderStates=true;
@@ -4134,6 +4150,7 @@ bool COpenGLDriver::setRenderTarget(video::ITexture* texture, bool clearBackBuff
 			// we want to set a new target. so do this.
 			glViewport(0, 0, texture->getSize().Width, texture->getSize().Height);
 			RenderTargetTexture = static_cast<COpenGLTexture*>(texture);
+			// calls glDrawBuffer as well
 			RenderTargetTexture->bindRTT();
 			CurrentRendertargetSize = texture->getSize();
 			CurrentTarget=ERT_RENDER_TEXTURE;
@@ -4390,11 +4407,11 @@ IImage* COpenGLDriver::createScreenShot(video::ECOLOR_FORMAT format, video::E_RE
 		type = GL_UNSIGNED_SHORT_1_5_5_5_REV;
 		break;
 	case ECF_R5G6B5:
-		fmt = GL_BGR;
-		type = GL_UNSIGNED_SHORT_5_6_5_REV;
+		fmt = GL_RGB;
+		type = GL_UNSIGNED_SHORT_5_6_5;
 		break;
 	case ECF_R8G8B8:
-		fmt = GL_BGR;
+		fmt = GL_RGB;
 		type = GL_UNSIGNED_BYTE;
 		break;
 	case ECF_A8R8G8B8:
@@ -4599,7 +4616,7 @@ bool COpenGLDriver::setClipPlane(u32 index, const core::plane3df& plane, bool en
 void COpenGLDriver::uploadClipPlane(u32 index)
 {
 	// opengl needs an array of doubles for the plane equation
-	double clip_plane[4];
+	GLdouble clip_plane[4];
 	clip_plane[0] = UserClipPlanes[index].Plane.Normal.X;
 	clip_plane[1] = UserClipPlanes[index].Plane.Normal.Y;
 	clip_plane[2] = UserClipPlanes[index].Plane.Normal.Z;
@@ -4688,6 +4705,27 @@ GLenum COpenGLDriver::getGLBlend(E_BLEND_FACTOR factor) const
 		case EBF_SRC_ALPHA_SATURATE:	r = GL_SRC_ALPHA_SATURATE; break;
 	}
 	return r;
+}
+
+GLenum COpenGLDriver::getZBufferBits() const
+{
+	GLenum bits = 0;
+	switch (Params.ZBufferBits)
+	{
+	case 16:
+		bits = GL_DEPTH_COMPONENT16;
+		break;
+	case 24:
+		bits = GL_DEPTH_COMPONENT24;
+		break;
+	case 32:
+		bits = GL_DEPTH_COMPONENT32;
+		break;
+	default:
+		bits = GL_DEPTH_COMPONENT;
+		break;
+	}
+	return bits;
 }
 
 #ifdef _IRR_COMPILE_WITH_CG_

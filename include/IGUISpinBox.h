@@ -1,4 +1,4 @@
-// Copyright (C) 2006-2011 Michael Zeilfelder
+// Copyright (C) 2006-2012 Michael Zeilfelder
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -14,6 +14,9 @@ namespace gui
 	class IGUIEditBox;
 
 	//! Single line edit box + spin buttons
+	/** \par This element can create the following events of type EGUI_EVENT_TYPE:
+	\li EGET_SPINBOX_CHANGED
+	*/
 	class IGUISpinBox : public IGUIElement
 	{
 	public:

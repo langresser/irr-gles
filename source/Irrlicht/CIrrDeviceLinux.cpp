@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -11,6 +11,8 @@
 #include <sys/utsname.h>
 #include <time.h>
 #include "IEventReceiver.h"
+#include "ISceneManager.h"
+#include "IGUIEnvironment.h"
 #include "os.h"
 #include "CTimer.h"
 #include "irrString.h"
@@ -18,7 +20,6 @@
 #include "COSOperator.h"
 #include "CColorConverter.h"
 #include "SIrrCreationParameters.h"
-#include "SExposedVideoData.h"
 #include "IGUISpriteBank.h"
 #include <X11/XKBlib.h>
 #include <X11/Xatom.h>
@@ -51,18 +52,8 @@ namespace irr
 {
 	namespace video
 	{
-        #ifdef _IRR_COMPILE_WITH_OPENGL_
-		IVideoDriver* createOpenGLDriver(const irr::SIrrlichtCreationParameters& params,
-                                         io::IFileSystem* io, CIrrDeviceWin32* device);
-        #endif
-        
-        #ifdef _IRR_COMPILE_WITH_OGLES1_ 	 
-        IVideoDriver* createOGLES1Driver(const SIrrlichtCreationParameters& params, video::SExposedVideoData& data, io::IFileSystem* io); 	 
-        #endif 	 
-
-        #ifdef _IRR_COMPILE_WITH_OGLES2_ 	 
-        IVideoDriver* createOGLES2Driver(const SIrrlichtCreationParameters& params, video::SExposedVideoData& data, io::IFileSystem* io); 	 
-        #endif
+		IVideoDriver* createOpenGLDriver(const SIrrlichtCreationParameters& params,
+				io::IFileSystem* io, CIrrDeviceLinux* device);
 	}
 } // end namespace irr
 
@@ -151,6 +142,24 @@ CIrrDeviceLinux::~CIrrDeviceLinux()
 		CursorControl->setVisible(false);
 		static_cast<CCursorControl*>(CursorControl)->clearCursors();
 	}
+
+	// Must free OpenGL textures etc before destroying context, so can't wait for stub destructor
+	if ( GUIEnvironment )
+	{
+		GUIEnvironment->drop();
+		GUIEnvironment = NULL;
+	}
+	if ( SceneManager )
+	{
+		SceneManager->drop();
+		SceneManager = NULL;
+	}
+	if ( VideoDriver )
+	{
+		VideoDriver->drop();
+		VideoDriver = NULL;
+	}
+
 	if (display)
 	{
 		#ifdef _IRR_COMPILE_WITH_OPENGL_
@@ -822,32 +831,6 @@ void CIrrDeviceLinux::createDriver()
 		#endif
 		break;
 
-    case video::EDT_OGLES1: 	 
-        #ifdef _IRR_COMPILE_WITH_OGLES1_ 	 
-        { 	 
-            video::SExposedVideoData data; 	 
-            data.OpenGLLinux.X11Window = window; 	 
-            data.OpenGLLinux.X11Display = display; 	 
-            VideoDriver = video::createOGLES1Driver(CreationParams, data, FileSystem); 	 
-        } 	 
-        #else 	 
-        os::Printer::log("No OpenGL-ES1 support compiled in.", ELL_ERROR); 	 
-        #endif 	 
-        break;
-            
-    case video::EDT_OGLES2: 	 
-    #ifdef _IRR_COMPILE_WITH_OGLES2_ 	 
-        { 	 
-            video::SExposedVideoData data; 	 
-            data.OpenGLLinux.X11Window = window; 	 
-            data.OpenGLLinux.X11Display = display; 	 
-            VideoDriver = video::createOGLES2Driver(CreationParams, data, FileSystem); 	 
-        } 	 
-        #else 	 
-        os::Printer::log("No OpenGL-ES2 support compiled in.", ELL_ERROR); 	 
-        #endif 	 
-        break;
-
 	case video::EDT_DIRECT3D8:
 	case video::EDT_DIRECT3D9:
 		os::Printer::log("This driver is not available in Linux. Try OpenGL or Software renderer.",
@@ -1181,7 +1164,7 @@ bool CIrrDeviceLinux::run()
 //! Pause the current process for the minimum time allowed only to allow other processes to execute
 void CIrrDeviceLinux::yield()
 {
-	struct timespec ts = {0,0};
+	struct timespec ts = {0,1};
 	nanosleep(&ts, NULL);
 }
 
@@ -2127,7 +2110,11 @@ Cursor CIrrDeviceLinux::TextureToCursor(irr::video::ITexture * tex, const core::
 
 
 CIrrDeviceLinux::CCursorControl::CCursorControl(CIrrDeviceLinux* dev, bool null)
-	: Device(dev), IsVisible(true), Null(null), UseReferenceRect(false)
+	: Device(dev)
+#ifdef _IRR_COMPILE_WITH_X11_
+	, PlatformBehavior(gui::ECPB_NONE), lastQuery(0)
+#endif
+	, IsVisible(true), Null(null), UseReferenceRect(false)
 	, ActiveIcon(gui::ECI_NORMAL), ActiveIconStartTime(0)
 {
 #ifdef _IRR_COMPILE_WITH_X11_
@@ -2173,6 +2160,8 @@ CIrrDeviceLinux::CCursorControl::~CCursorControl()
 #ifdef _IRR_COMPILE_WITH_X11_
 void CIrrDeviceLinux::CCursorControl::clearCursors()
 {
+	if (!Null)
+		XFreeCursor(Device->display, invisCursor);
 	for ( u32 i=0; i < Cursors.size(); ++i )
 	{
 		for ( u32 f=0; f < Cursors[i].Frames.size(); ++f )

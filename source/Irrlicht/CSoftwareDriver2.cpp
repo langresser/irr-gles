@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt / Thomas Alten
+// Copyright (C) 2002-2012 Nikolaus Gebhardt / Thomas Alten
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -1736,6 +1736,14 @@ void CBurningVideoDriver::drawVertexPrimitiveList(const void* vertices, u32 vert
 
 	CNullDriver::drawVertexPrimitiveList(vertices, vertexCount, indexList, primitiveCount, vType, pType, iType);
 
+	// These calls would lead to crashes due to wrong index usage.
+	// The vertex cache needs to be rewritten for these primitives.
+	if (pType==scene::EPT_POINTS || pType==scene::EPT_LINE_STRIP ||
+		pType==scene::EPT_LINE_LOOP || pType==scene::EPT_LINES ||
+		pType==scene::EPT_TRIANGLE_FAN || pType==scene::EPT_POLYGON ||
+		pType==scene::EPT_POINT_SPRITES)
+		return;
+
 	if ( 0 == CurrentShader )
 		return;
 
@@ -1805,48 +1813,6 @@ void CBurningVideoDriver::drawVertexPrimitiveList(const void* vertices, u32 vert
 
 		u32 vOut;
 		vOut = clipToFrustum ( CurrentOut.data, Temp.data, 3 );
-/*
-		if ( vOut < 3 )
-		{
-			char buf[256];
-			struct SCheck
-			{
-				u32 flag;
-				const char * name;
-			};
-
-			SCheck check[5];
-			check[0].flag = face[0]->flag;
-			check[0].name = "face0";
-			check[1].flag = face[1]->flag;
-			check[1].name = "face1";
-			check[2].flag = face[2]->flag;
-			check[2].name = "face2";
-			check[3].flag = (face[0]->flag & face[1]->flag & face[2]->flag);
-			check[3].name = "AND  ";
-			check[4].flag = (face[0]->flag | face[1]->flag | face[2]->flag);
-			check[4].name = "OR   ";
-
-			for ( s32 h = 0; h!= 5; ++h )
-			{
-				sprintf ( buf, "%s: %d %d %d %d %d %d",
-								check[h].name,
-								( check[h].flag & 1 ),
-								( check[h].flag & 2 ) >> 1,
-								( check[h].flag & 4 ) >> 2,
-								( check[h].flag & 8 ) >> 3,
-								( check[h].flag & 16 ) >> 4,
-								( check[h].flag & 32 ) >> 5
-							);
-				os::Printer::log( buf );
-			}
-
-			sprintf ( buf, "Vout: %d\n", vOut );
-			os::Printer::log( buf );
-
-			int hold = 1;
-		}
-*/
 		if ( vOut < 3 )
 			continue;
 
@@ -1884,8 +1850,7 @@ void CBurningVideoDriver::drawVertexPrimitiveList(const void* vertices, u32 vert
 		dc_area = screenarea ( CurrentOut.data );
 		if ( Material.org.BackfaceCulling && F32_LOWER_EQUAL_0 ( dc_area ) )
 			continue;
-		else
-		if ( Material.org.FrontfaceCulling && F32_GREATER_EQUAL_0( dc_area ) )
+		else if ( Material.org.FrontfaceCulling && F32_GREATER_EQUAL_0( dc_area ) )
 			continue;
 
 		// select mipmap
@@ -1977,6 +1942,8 @@ s32 CBurningVideoDriver::addDynamicLight(const SLight& dl)
 			l.linearAttenuation = 1.f / dl.Radius;
 			l.quadraticAttenuation = dl.Attenuation.Z;
 
+			break;
+		default:
 			break;
 	}
 
@@ -2197,6 +2164,8 @@ void CBurningVideoDriver::lightVertex ( s4DVertex *dest, u32 vertexargb )
 				// diffuse component
 				diffuse.mulAdd ( light.DiffuseColor, dot );
 				break;
+			default:
+				break;
 		}
 
 	}
@@ -2263,7 +2232,7 @@ void CBurningVideoDriver::draw2DImage(const video::ITexture* texture, const core
 			os::Printer::log("Fatal Error: Tried to copy from a surface not owned by this driver.", ELL_ERROR);
 			return;
 		}
-	
+
 	if (useAlphaChannelOfTexture)
 		StretchBlit(BLITTER_TEXTURE_ALPHA_BLEND, RenderTargetSurface, &destRect, &sourceRect,
 			    ((CSoftwareTexture2*)texture)->getImage(), (colors ? colors[0].color : 0));
@@ -2272,7 +2241,7 @@ void CBurningVideoDriver::draw2DImage(const video::ITexture* texture, const core
 			    ((CSoftwareTexture2*)texture)->getImage(), (colors ? colors[0].color : 0));
 	}
 }
-    
+
 //! Draws a 2d line.
 void CBurningVideoDriver::draw2DLine(const core::position2d<s32>& start,
 					const core::position2d<s32>& end,
@@ -2538,7 +2507,7 @@ const wchar_t* CBurningVideoDriver::getName() const
 //! Returns the graphics card vendor name.
 core::stringc CBurningVideoDriver::getVendorInfo()
 {
-	return "Burning's Video: Ing. Thomas Alten (c) 2006-2011";
+	return "Burning's Video: Ing. Thomas Alten (c) 2006-2012";
 }
 
 

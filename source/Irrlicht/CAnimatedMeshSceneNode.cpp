@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -81,6 +81,7 @@ f32 CAnimatedMeshSceneNode::getFrameNr() const
 }
 
 
+//! Get CurrentFrameNr and update transiting settings
 void CAnimatedMeshSceneNode::buildFrameNr(u32 timeMs)
 {
 	if (Transiting!=0.f)
@@ -238,8 +239,15 @@ IMesh * CAnimatedMeshSceneNode::getMeshForCurrentFrame()
 //! OnAnimate() is called just before rendering the whole scene.
 void CAnimatedMeshSceneNode::OnAnimate(u32 timeMs)
 {
+	if (LastTimeMs==0)	// first frame
+	{
+		LastTimeMs = timeMs;
+	}
+
+	// set CurrentFrameNr
 	buildFrameNr(timeMs-LastTimeMs);
 
+	// update bbox
 	if (Mesh)
 	{
 		scene::IMesh * mesh = getMeshForCurrentFrame();
@@ -249,7 +257,7 @@ void CAnimatedMeshSceneNode::OnAnimate(u32 timeMs)
 	}
 	LastTimeMs = timeMs;
 
-	IAnimatedMeshSceneNode::OnAnimate ( timeMs );
+	IAnimatedMeshSceneNode::OnAnimate(timeMs);
 }
 
 
@@ -281,7 +289,6 @@ void CAnimatedMeshSceneNode::render()
 	}
 
 	driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
-
 
 	if (Shadow && PassCount==1)
 		Shadow->updateShadowVolumes();
@@ -727,6 +734,12 @@ void CAnimatedMeshSceneNode::setLoopMode(bool playAnimationLooped)
 	Looping = playAnimationLooped;
 }
 
+//! returns the current loop mode
+bool CAnimatedMeshSceneNode::getLoopMode() const
+{
+	return Looping;
+}
+
 
 //! Sets a callback interface which will be called if an animation
 //! playback has ended. Set this to 0 to disable the callback again.
@@ -1102,6 +1115,7 @@ ISceneNode* CAnimatedMeshSceneNode::clone(ISceneNode* newParent, ISceneManager* 
 	newNode->LoopCallBack = LoopCallBack;
 	newNode->PassCount = PassCount;
 	newNode->Shadow = Shadow;
+	newNode->Shadow->grab();
 	newNode->JointChildSceneNodes = JointChildSceneNodes;
 	newNode->PretransitingSave = PretransitingSave;
 	newNode->RenderFromIdentity = RenderFromIdentity;

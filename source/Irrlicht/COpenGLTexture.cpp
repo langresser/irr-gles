@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -144,8 +144,8 @@ GLint COpenGLTexture::getOpenGLFormatAndParametersFromColorFormat(ECOLOR_FORMAT 
 			internalformat =  GL_RGBA;
 			break;
 		case ECF_R5G6B5:
-			colorformat=GL_BGR;
-			type=GL_UNSIGNED_SHORT_5_6_5_REV;
+			colorformat=GL_RGB;
+			type=GL_UNSIGNED_SHORT_5_6_5;
 			internalformat =  GL_RGB;
 			break;
 		case ECF_R8G8B8:
@@ -699,6 +699,9 @@ COpenGLFBOTexture::COpenGLFBOTexture(const core::dimension2d<u32>& size,
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, ImageSize.Width,
 		ImageSize.Height, 0, PixelFormat, PixelType, 0);
+#ifdef _DEBUG
+	driver->testGLError();
+#endif
 
 	// attach color texture to frame buffer
 	Driver->extGlFramebufferTexture2D(GL_FRAMEBUFFER_EXT,
@@ -706,6 +709,10 @@ COpenGLFBOTexture::COpenGLFBOTexture(const core::dimension2d<u32>& size,
 						GL_TEXTURE_2D,
 						TextureName,
 						0);
+#ifdef _DEBUG
+	checkFBOStatus(Driver);
+#endif
+
 #endif
 	unbindRTT();
 }
@@ -790,7 +797,7 @@ COpenGLFBODepthTexture::COpenGLFBODepthTexture(
 #endif
 		{
 			// generate depth texture
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, ImageSize.Width,
+			glTexImage2D(GL_TEXTURE_2D, 0, Driver->getZBufferBits(), ImageSize.Width,
 				ImageSize.Height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
 
 			// generate stencil texture
@@ -810,7 +817,7 @@ COpenGLFBODepthTexture::COpenGLFBODepthTexture(
 		Driver->extGlGenRenderbuffers(1, &DepthRenderBuffer);
 		Driver->extGlBindRenderbuffer(GL_RENDERBUFFER_EXT, DepthRenderBuffer);
 		Driver->extGlRenderbufferStorage(GL_RENDERBUFFER_EXT,
-				GL_DEPTH_COMPONENT, ImageSize.Width,
+				Driver->getZBufferBits(), ImageSize.Width,
 				ImageSize.Height);
 	}
 #endif

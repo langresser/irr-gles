@@ -188,6 +188,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\billboards.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\burningsVideo.cpp"
 				>
 			</File>
@@ -221,6 +225,10 @@
 			</File>
 			<File
 				RelativePath=".\drawRectOutline.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\drawVertexPrimitive.cpp"
 				>
 			</File>
 			<File
@@ -280,7 +288,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\line2dIntersectWith.cpp"
+				RelativePath=".\testLine2d.cpp"
 				>
 			</File>
 			<File
@@ -421,6 +429,18 @@
 			</File>
 			<File
 				RelativePath=".\transparentMaterials.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\triangle3d.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\triangleSelector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\userClipPlane.cpp"
 				>
 			</File>
 			<File

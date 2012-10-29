@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -68,10 +68,7 @@ public:
 	example if he doesn't support the specified vertex type. This is
 	actually done in D3D8 and D3D9 when using a normal mapped material with
 	a vertex type other than EVT_TANGENTS. */
-    virtual bool OnRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype) { return true; }
-    
-    //! Called every time after an each bunch of geometry was drawed.
-    virtual bool PostRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype) { return true; }
+	virtual bool OnRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype) { return true; }
 
 	//! Called by the IVideoDriver to unset this material.
 	/** Called during the IVideoDriver::setMaterial() call before the new

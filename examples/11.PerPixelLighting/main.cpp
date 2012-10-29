@@ -3,7 +3,7 @@
 This tutorial shows how to use one of the built in more complex materials in
 irrlicht: Per pixel lighted surfaces using normal maps and parallax mapping. It
 will also show how to use fog and moving particle systems. And don't panic: You
-dont need any experience with shaders to use these materials in Irrlicht.
+do not need any experience with shaders to use these materials in Irrlicht.
 
 At first, we need to include all headers and do the stuff we always do, like in
 nearly all other tutorials.
@@ -137,7 +137,7 @@ private:
 		/*
 		We need to add a warning if the materials will not be able to
 		be displayed 100% correctly. This is no problem, they will be
-		renderered using fall back materials, but at least the user
+		rendered using fall back materials, but at least the user
 		should know that it would look better on better hardware. We
 		simply check if the material renderer is able to draw at full
 		quality on the current hardware. The
@@ -169,7 +169,7 @@ Now for the real fun. We create an Irrlicht Device and start to setup the scene.
 */
 int main()
 {
-	// let user select driver type
+	// ask user for driver
 	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
 	if (driverType==video::EDT_COUNT)
 		return 1;
@@ -181,7 +181,6 @@ int main()
 
 	if (device == 0)
 		return 1; // could not create selected driver.
-
 
 	/*
 	Before we start with the interesting stuff, we do some simple things:
@@ -263,7 +262,7 @@ int main()
 			driver->makeNormalMapTexture(normalMap, 9.0f);
 /*
 		// The Normal Map and the displacement map/height map in the alpha channel
-		video::ITexture* normalMap = 
+		video::ITexture* normalMap =
 			driver->getTexture("../../media/rockwall_NRM.tga");
 */
 		/*
@@ -379,7 +378,7 @@ int main()
 	anim->drop();
 
 	// attach billboard to the light
-	scene::ISceneNode* bill =
+	scene::IBillboardSceneNode* bill =
 		smgr->addBillboardSceneNode(light1, core::dimension2d<f32>(60, 60));
 
 	bill->setMaterialFlag(video::EMF_LIGHTING, false);

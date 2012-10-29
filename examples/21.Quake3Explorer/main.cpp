@@ -9,7 +9,7 @@ Features:
 	- Adjust GammaLevel at runtime
 	- Create SceneNodes for the Shaders
 	- Load EntityList and create Entity SceneNodes
-	- Create Players with Weapons and with Collison Respsone
+	- Create Players with Weapons and with Collision Response
 	- Play music
 
 You can download the Quake III Arena demo ( copyright id software )
@@ -19,9 +19,10 @@ ftp://ftp.idsoftware.com/idstuff/quake3/win32/q3ademo.exe
 Copyright 2006-2011 Burningwater, Thomas Alten
 */
 
+#include "driverChoice.h"
+#include <irrlicht.h>
 #include "q3factory.h"
 #include "sound.h"
-#include "driverChoice.h"
 
 /*
 	Game Data is used to hold Data which is needed to drive the game
@@ -582,13 +583,12 @@ CQuake3EventHandler::~CQuake3EventHandler ()
 
 
 // create runtime textures smog, fog
-void CQuake3EventHandler::createTextures ()
+void CQuake3EventHandler::createTextures()
 {
 	IVideoDriver * driver = Game->Device->getVideoDriver();
 
-	dimension2du dim ( 64, 64 );
+	dimension2du dim(64, 64);
 
-	video::ITexture* texture;
 	video::IImage* image;
 	u32 i;
 	u32 x;
@@ -608,7 +608,7 @@ void CQuake3EventHandler::createTextures ()
 		}
 		image->unlock();
 		snprintf ( buf, 64, "smoke_%02d", i );
-		texture = driver->addTexture( buf, image );
+		driver->addTexture( buf, image );
 		image->drop ();
 	}
 
@@ -627,10 +627,9 @@ void CQuake3EventHandler::createTextures ()
 		}
 		image->unlock();
 		snprintf ( buf, 64, "fog_%02d", i );
-		texture = driver->addTexture( buf, image );
+		driver->addTexture( buf, image );
 		image->drop ();
 	}
-
 }
 
 
@@ -683,7 +682,7 @@ void CQuake3EventHandler::CreateGUI()
 	gui.VideoDriver->addItem(L"Direct3D 9.0c", EDT_DIRECT3D9 );
 	gui.VideoDriver->addItem(L"Direct3D 8.1", EDT_DIRECT3D8 );
 	gui.VideoDriver->addItem(L"OpenGL 1.5", EDT_OPENGL);
-	gui.VideoDriver->addItem(L"Software Renderer", EDT_OGLES1);
+	gui.VideoDriver->addItem(L"Software Renderer", EDT_SOFTWARE);
 	gui.VideoDriver->addItem(L"Burning's Video (TM) Thomas Alten", EDT_BURNINGSVIDEO);
 	gui.VideoDriver->setSelected ( gui.VideoDriver->getIndexForItemData ( Game->deviceParam.DriverType ) );
 	gui.VideoDriver->setToolTipText ( L"Use a VideoDriver" );
@@ -830,7 +829,7 @@ void CQuake3EventHandler::CreateGUI()
 
 
 /*
-	Add an Archive to the FileSystems und updates the GUI
+	Add an Archive to the FileSystems and updates the GUI
 */
 void CQuake3EventHandler::AddArchive ( const path& archiveName )
 {

@@ -108,8 +108,8 @@ public:
 */
 IrrlichtDevice *startup()
 {
-	//E_DRIVER_TYPE driverType = EDT_BURNINGSVIDEO;
-	E_DRIVER_TYPE driverType = EDT_OPENGL;
+	// both software and burnings video can be used
+	E_DRIVER_TYPE driverType = EDT_SOFTWARE; // EDT_BURNINGSVIDEO;
 
 	// create device
 	IrrlichtDevice *device = 0;
@@ -407,7 +407,7 @@ int example_terrain()
 
 	/*
 	To make the user be able to switch between normal and wireframe mode,
-	we create an instance of the event reciever from above and let Irrlicht
+	we create an instance of the event receiver from above and let Irrlicht
 	know about it. In addition, we add the skybox which we already used in
 	lots of Irrlicht examples and a skydome, which is shown mutually
 	exclusive with the skybox by pressing 'S'.

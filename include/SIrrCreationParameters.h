@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -45,8 +45,7 @@ namespace irr
 			DisplayAdapter(0),
 			DriverMultithreaded(false),
 			UsePerformanceTimer(true),
-			SDK_version_do_not_use(IRRLICHT_SDK_VERSION),
-			PrivateData(0)
+			SDK_version_do_not_use(IRRLICHT_SDK_VERSION)
 		{
 		}
 
@@ -77,7 +76,6 @@ namespace irr
 			DriverMultithreaded = other.DriverMultithreaded;
 			DisplayAdapter = other.DisplayAdapter;
 			UsePerformanceTimer = other.UsePerformanceTimer;
-			PrivateData = other.PrivateData;
 			return *this;
 		}
 
@@ -289,12 +287,6 @@ namespace irr
 		/** Always set it to IRRLICHT_SDK_VERSION, which is done by default.
 		This is needed for sdk version checks. */
 		const c8* const SDK_version_do_not_use;
-		
-		//! Define some private data storage.
-		/** Used when platform devices need access to OS specific data structures etc.
-		This is only used for Android at th emoment in order to access the native
-		Java RE. */
-		void *PrivateData;
 	};
 
 

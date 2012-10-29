@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -462,13 +462,13 @@ bool CGUIEditBox::processKey(const SEvent& event)
 		if (MultiLine)
 		{
 			inputChar(L'\n');
-			return true;
 		}
 		else
 		{
+			calculateScrollPos();
 			sendGuiEvent( EGET_EDITBOX_ENTER );
 		}
-		break;
+		return true;
 	case KEY_LEFT:
 
 		if (event.KeyInput.Shift)
@@ -694,10 +694,13 @@ bool CGUIEditBox::processKey(const SEvent& event)
 	if (textChanged)
 	{
 		breakText();
+		calculateScrollPos();
 		sendGuiEvent(EGET_EDITBOX_CHANGED);
 	}
-
-	calculateScrollPos();
+	else
+	{
+		calculateScrollPos();
+	}
 
 	return true;
 }
@@ -1117,7 +1120,7 @@ void CGUIEditBox::breakText()
 			{
 				// TODO: I (Michael) think that we shouldn't change the text given by the user for whatever reason.
 				// Instead rework the cursor positioning to be able to handle this (but not in stable release
-				// branch as users might already expect this behaviour).
+				// branch as users might already expect this behavior).
 				Text.erase(i+1);
 				--size;
 				if ( CursorPos > i )
@@ -1323,8 +1326,8 @@ void CGUIEditBox::inputChar(wchar_t c)
 		}
 	}
 	breakText();
-	sendGuiEvent(EGET_EDITBOX_CHANGED);
 	calculateScrollPos();
+	sendGuiEvent(EGET_EDITBOX_CHANGED);
 }
 
 // calculate autoscroll

@@ -67,9 +67,6 @@
     <Filter Include="Irrlicht\video\Null\Loader">
       <UniqueIdentifier>{e2571a61-945c-4509-b47c-daea464916ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Irrlicht\video\Direct3D9">
-      <UniqueIdentifier>{1354e9fa-cea6-461e-af7f-9940bb5f0a2f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Irrlicht\video\Burning Video">
       <UniqueIdentifier>{ac7af7ba-0e6b-4da4-a695-a0070a4da974}</UniqueIdentifier>
     </Filter>
@@ -102,12 +99,6 @@
     </Filter>
     <Filter Include="Irrlicht\gui">
       <UniqueIdentifier>{da421793-4674-481c-be46-f7a44e78aee5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Irrlicht\video\OpenGL-ES 1.x">
-      <UniqueIdentifier>{f85fdc72-0905-4f0d-b663-da2c32c1c53e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Irrlicht\video\OpenGL-ES 2.x">
-      <UniqueIdentifier>{f5c11425-7060-4a40-8de9-5178c00ed4c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -960,27 +951,6 @@
     <ClInclude Include="CImageLoaderWAL.h">
       <Filter>Irrlicht\video\Null\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="CD3D9Driver.h">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClInclude>
-    <ClInclude Include="CD3D9HLSLMaterialRenderer.h">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClInclude>
-    <ClInclude Include="CD3D9MaterialRenderer.h">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClInclude>
-    <ClInclude Include="CD3D9NormalMapRenderer.h">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClInclude>
-    <ClInclude Include="CD3D9ParallaxMapRenderer.h">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClInclude>
-    <ClInclude Include="CD3D9ShaderMaterialRenderer.h">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClInclude>
-    <ClInclude Include="CD3D9Texture.h">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClInclude>
     <ClInclude Include="CDepthBuffer.h">
       <Filter>Irrlicht\video\Burning Video</Filter>
     </ClInclude>
@@ -1285,48 +1255,6 @@
       <Filter>include\scene</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="COGLESTexture.h">
-      <Filter>Irrlicht\video\OpenGL-ES 1.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLESDriver.h">
-      <Filter>Irrlicht\video\OpenGL-ES 1.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLESExtensionHandler.h">
-      <Filter>Irrlicht\video\OpenGL-ES 1.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLESMaterialRenderer.h">
-      <Filter>Irrlicht\video\OpenGL-ES 1.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2Texture.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2Driver.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2ExtensionHandler.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2FixedPipelineShader.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2MaterialRenderer.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2NormalMapRenderer.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2ParallaxMapRenderer.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2Renderer2D.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="COGLES2SLMaterialRenderer.h">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\driverChoice.h">
-      <Filter>include\video</Filter>
-    </ClInclude>
     <ClInclude Include="CSceneLoaderIrr.h">
       <Filter>Irrlicht\scene\loaders</Filter>
     </ClInclude>
@@ -1341,6 +1269,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\IRandomizer.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EMaterialFlags.h">
+      <Filter>include\video</Filter>
+    </ClInclude>
+    <ClInclude Include="COpenGLCgMaterialRenderer.h">
+      <Filter>Irrlicht\video\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="CCgMaterialRenderer.h">
+      <Filter>Irrlicht\video</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1738,24 +1675,6 @@
     </ClCompile>
     <ClCompile Include="CImageLoaderWAL.cpp">
       <Filter>Irrlicht\video\Null\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="CD3D9Driver.cpp">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClCompile>
-    <ClCompile Include="CD3D9HLSLMaterialRenderer.cpp">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClCompile>
-    <ClCompile Include="CD3D9NormalMapRenderer.cpp">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClCompile>
-    <ClCompile Include="CD3D9ParallaxMapRenderer.cpp">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClCompile>
-    <ClCompile Include="CD3D9ShaderMaterialRenderer.cpp">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
-    </ClCompile>
-    <ClCompile Include="CD3D9Texture.cpp">
-      <Filter>Irrlicht\video\Direct3D9</Filter>
     </ClCompile>
     <ClCompile Include="CBurningShader_Raster_Reference.cpp">
       <Filter>Irrlicht\video\Burning Video</Filter>
@@ -2261,44 +2180,17 @@
     <ClCompile Include="CGUIWindow.cpp">
       <Filter>Irrlicht\gui</Filter>
     </ClCompile>
-    <ClCompile Include="COGLESDriver.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 1.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLESExtensionHandler.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 1.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLESTexture.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 1.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2Driver.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2ExtensionHandler.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2FixedPipelineShader.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2NormalMapRenderer.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2ParallaxMapRenderer.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2Renderer2D.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2SLMaterialRenderer.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
-    <ClCompile Include="COGLES2Texture.cpp">
-      <Filter>Irrlicht\video\OpenGL-ES 2.x</Filter>
-    </ClCompile>
     <ClCompile Include="CSceneLoaderIrr.cpp">
       <Filter>Irrlicht\scene\loaders</Filter>
     </ClCompile>
     <ClCompile Include="CSMFMeshFileLoader.cpp">
       <Filter>Irrlicht\scene\loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="COpenGLCgMaterialRenderer.cpp">
+      <Filter>Irrlicht\video\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="CCgMaterialRenderer.cpp">
+      <Filter>Irrlicht\video</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

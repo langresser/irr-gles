@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt/ Thomas Alten
+// Copyright (C) 2002-2012 Nikolaus Gebhardt/ Thomas Alten
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -44,9 +44,6 @@ enum E_FILE_ARCHIVE_TYPE
 
 	//! A wad Archive, Quake2, Halflife
 	EFAT_WAD     = MAKE_IRR_ID('W','A','D', 0),
-
-    //! An Android asset file archive
-    EFAT_ANDROID_ASSET = MAKE_IRR_ID('A','S','S','E'),
 
 	//! The type of this archive is unknown
 	EFAT_UNKNOWN = MAKE_IRR_ID('u','n','k','n')

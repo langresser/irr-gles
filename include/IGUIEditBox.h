@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -15,6 +15,11 @@ namespace gui
 	class IGUIFont;
 
 	//! Single line edit box for editing simple text.
+	/** \par This element can create the following events of type EGUI_EVENT_TYPE:
+	\li EGET_EDITBOX_ENTER
+	\li EGET_EDITBOX_CHANGED
+	\li EGET_EDITBOX_MARKING_CHANGED
+	*/
 	class IGUIEditBox : public IGUIElement
 	{
 	public:

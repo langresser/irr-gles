@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -51,13 +51,6 @@ namespace video
 		/** Performs hardware accelerated rendering of 3D and 2D
 		primitives. */
 		EDT_OPENGL,
-        
-        //! OpenGL-ES 1.x driver, for embedded and mobile systems
-		EDT_OGLES1,
-        
-		//! OpenGL-ES 2.x driver, for embedded and mobile systems
-		/** Supports shaders etc. */
-		EDT_OGLES2,
 
 		//! No driver, just for counting the elements
 		EDT_COUNT

@@ -1,10 +1,10 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "IrrCompileConfig.h"
 
-static const char* const copyright = "Irrlicht Engine (c) 2002-2011 Nikolaus Gebhardt";
+static const char* const copyright = "Irrlicht Engine (c) 2002-2012 Nikolaus Gebhardt";
 
 #ifdef _IRR_WINDOWS_
 	#include <windows.h>
@@ -30,10 +30,6 @@ static const char* const copyright = "Irrlicht Engine (c) 2002-2011 Nikolaus Geb
 #include "CIrrDeviceLinux.h"
 #endif
 
-#ifdef _IRR_COMPILE_WITH_IPHONE_DEVICE_
-#include "iOS/CIrrDeviceiOS.h"
-#endif
-
 #ifdef _IRR_COMPILE_WITH_SDL_DEVICE_
 #include "CIrrDeviceSDL.h"
 #endif
@@ -44,10 +40,6 @@ static const char* const copyright = "Irrlicht Engine (c) 2002-2011 Nikolaus Geb
 
 #ifdef _IRR_COMPILE_WITH_CONSOLE_DEVICE_
 #include "CIrrDeviceConsole.h"
-#endif
-
-#ifdef _IRR_COMPILE_WITH_ANDROID_DEVICE_
-#include "CIrrDeviceAndroid.h"
 #endif
 
 namespace irr
@@ -94,11 +86,6 @@ namespace irr
 		if (params.DeviceType == EIDT_X11 || (!dev && params.DeviceType == EIDT_BEST))
 			dev = new CIrrDeviceLinux(params);
 #endif
-        
-#ifdef _IRR_COMPILE_WITH_IPHONE_DEVICE_
-		if (params.DeviceType == EIDT_IPHONE || (!dev && params.DeviceType == EIDT_BEST))
-			dev = new CIrrDeviceIPhone(params);
-#endif
 
 #ifdef _IRR_COMPILE_WITH_SDL_DEVICE_
 		if (params.DeviceType == EIDT_SDL || (!dev && params.DeviceType == EIDT_BEST))
@@ -108,11 +95,6 @@ namespace irr
 #ifdef _IRR_COMPILE_WITH_FB_DEVICE_
 		if (params.DeviceType == EIDT_FRAMEBUFFER || (!dev && params.DeviceType == EIDT_BEST))
 			dev = new CIrrDeviceFB(params);
-#endif
-
-#ifdef _IRR_COMPILE_WITH_ANDROID_DEVICE_
-		if (params.DeviceType == EIDT_ANDROID || (!dev && params.DeviceType == EIDT_BEST))
-			dev = new CIrrDeviceAndroid(params);
 #endif
 
 #ifdef _IRR_COMPILE_WITH_CONSOLE_DEVICE_
@@ -134,6 +116,7 @@ namespace irr
 namespace core
 {
 	const matrix4 IdentityMatrix(matrix4::EM4CONST_IDENTITY);
+	irr::core::stringc LOCALE_DECIMAL_POINTS(".");
 }
 
 namespace video

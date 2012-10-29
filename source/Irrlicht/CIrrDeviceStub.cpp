@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2011 Nikolaus Gebhardt
+// Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -348,54 +348,6 @@ bool CIrrDeviceStub::activateJoysticks(core::array<SJoystickInfo> & joystickInfo
 	return false;
 }
 
-//! No-op in this implementation
-bool CIrrDeviceStub::activateAccelerometer(float updateInterval)
-{
-    return false;
-}
-    
-//! No-op in this implementation
-bool CIrrDeviceStub::deactivateAccelerometer()
-{
-    return false;
-}
-    
-//! No-op in this implementation
-bool CIrrDeviceStub::isAccelerometerActive()
-{
-    return false;
-}
-    
-//! No-op in this implementation
-bool CIrrDeviceStub::isAccelerometerAvailable()
-{
-    return false;
-}
-    
-//! No-op in this implementation
-bool CIrrDeviceStub::activateGyroscope(float updateInterval)
-{
-    return false;
-}
-
-//! No-op in this implementation
-bool CIrrDeviceStub::deactivateGyroscope()
-{
-    return false;
-}
-    
-//! No-op in this implementation
-bool CIrrDeviceStub::isGyroscopeActive()
-{
-    return false;
-}
-    
-//! No-op in this implementation
-bool CIrrDeviceStub::isGyroscopeAvailable()
-{
-    return false;
-}
-
 /*!
 */
 void CIrrDeviceStub::calculateGammaRamp ( u16 *ramp, f32 gamma, f32 relativebrightness, f32 relativecontrast )
@@ -450,7 +402,7 @@ bool CIrrDeviceStub::getGammaRamp( f32 &red, f32 &green, f32 &blue, f32 &brightn
 	return false;
 }
 
-//! Set the maximal elapsed time between 2 clicks to generate doubleclicks for the mouse. It also affects tripleclick behaviour.
+//! Set the maximal elapsed time between 2 clicks to generate doubleclicks for the mouse. It also affects tripleclick behavior.
 void CIrrDeviceStub::setDoubleClickTime( u32 timeMs )
 {
 	MouseMultiClicks.DoubleClickTime = timeMs;
