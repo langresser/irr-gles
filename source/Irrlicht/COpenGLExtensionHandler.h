@@ -24,6 +24,11 @@
 		#include "glext.h"
 	#endif
 	#include "wglext.h"
+
+	#ifdef _MSC_VER
+		#pragma comment(lib, "OpenGL32.lib")
+	#endif
+
 #elif defined(_IRR_COMPILE_WITH_OSX_DEVICE_)
 	#include "CIrrDeviceMacOSX.h"
 	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)

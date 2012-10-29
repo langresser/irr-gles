@@ -45,8 +45,6 @@
 //! different library versions without having to change the sources.
 //! Example: NO_IRR_COMPILE_WITH_X11_ would disable X11
 
-//#define _IRR_ANDROID_PLATFORM_
-
 //! Uncomment this line to compile with the SDL device
 //#define _IRR_COMPILE_WITH_SDL_DEVICE_
 #ifdef NO_IRR_COMPILE_WITH_SDL_DEVICE_
@@ -101,7 +99,8 @@
 #if defined(__ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__) || defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 #define _IRR_IPHONE_PLATFORM_
 #define _IRR_COMPILE_WITH_IPHONE_DEVICE_
-#define _IRR_COMPILE_WITH_OGLES1_ // necessary for IPhone for now
+#define _IRR_COMPILE_WITH_OGLES1_
+#define _IRR_COMPILE_WITH_OGLES2_
 #else
 #define _IRR_COMPILE_WITH_OSX_DEVICE_
 #endif
@@ -122,6 +121,7 @@
 #define _IRR_COMPILE_WITH_X11_DEVICE_
 #endif
 
+
 //! Define _IRR_COMPILE_WITH_JOYSTICK_SUPPORT_ if you want joystick events.
 #define _IRR_COMPILE_WITH_JOYSTICK_EVENTS_
 #ifdef NO_IRR_COMPILE_WITH_JOYSTICK_EVENTS_
@@ -131,6 +131,45 @@
 
 //! Maximum number of texture an SMaterial can have, up to 8 are supported by Irrlicht.
 #define _IRR_MATERIAL_MAX_TEXTURES_ 4
+
+//! Define _IRR_COMPILE_WITH_DIRECT3D_8_ and _IRR_COMPILE_WITH_DIRECT3D_9_ to
+//! compile the Irrlicht engine with Direct3D8 and/or DIRECT3D9.
+/** If you only want to use the software device or opengl you can disable those defines.
+This switch is mostly disabled because people do not get the g++ compiler compile
+directX header files, and directX is only available on Windows platforms. If you
+are using Dev-Cpp, and want to compile this using a DX dev pack, you can define
+_IRR_COMPILE_WITH_DX9_DEV_PACK_. So you simply need to add something like this
+to the compiler settings: -DIRR_COMPILE_WITH_DX9_DEV_PACK
+and this to the linker settings: -ld3dx9 -ld3dx8
+
+Microsoft have chosen to remove D3D8 headers from their recent DXSDKs, and
+so D3D8 support is now disabled by default.  If you really want to build
+with D3D8 support, then you will have to source a DXSDK with the appropriate
+headers, e.g. Summer 2004.  This is a Microsoft issue, not an Irrlicht one.
+*/
+#if defined(_IRR_WINDOWS_API_) && (!defined(__GNUC__) || defined(IRR_COMPILE_WITH_DX9_DEV_PACK))
+
+//! Define _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_ if you want to use DirectInput for joystick handling.
+/** This only applies to Windows devices, currently only supported under Win32 device.
+If not defined, Windows Multimedia library is used, which offers also broad support for joystick devices. */
+#define _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
+#ifdef NO_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
+#undef _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
+#endif
+
+//! Only define _IRR_COMPILE_WITH_DIRECT3D_8_ if you have an appropriate DXSDK, e.g. Summer 2004
+// #define _IRR_COMPILE_WITH_DIRECT3D_8_
+#define _IRR_COMPILE_WITH_DIRECT3D_9_
+
+#ifdef NO_IRR_COMPILE_WITH_DIRECT3D_8_
+#undef _IRR_COMPILE_WITH_DIRECT3D_8_
+#endif
+#ifdef NO_IRR_COMPILE_WITH_DIRECT3D_9_
+#undef _IRR_COMPILE_WITH_DIRECT3D_9_
+#endif
+
+#endif
+
 //! Define _IRR_COMPILE_WITH_OPENGL_ to compile the Irrlicht engine with OpenGL.
 /** If you do not wish the engine to be compiled with OpenGL, comment this
 define out. */
@@ -148,7 +187,7 @@ define out. */
  it should be usually the only HW accelerated one. OpenGL is currently disabled
  if using this driver, to avoid problems with the ogl-es emulators.
  */
-//#define _IRR_COMPILE_WITH_OGLES1_
+// #define _IRR_COMPILE_WITH_OGLES1_
 #ifdef NO_IRR_COMPILE_WITH_OGLES1_
 #undef _IRR_COMPILE_WITH_OGLES1_
 #endif
@@ -160,6 +199,7 @@ define out. */
  it should be usually the only HW accelerated one. OpenGL is currently disabled
  if using this driver, to avoid problems with the ogl-es emulators.
  */
+// #define _IRR_COMPILE_WITH_OGLES2_
 #ifdef NO_IRR_COMPILE_WITH_OGLES2_
 #undef _IRR_COMPILE_WITH_OGLES2_
 #endif
@@ -194,8 +234,10 @@ define out. */
 //! Define _IRR_OPENGL_USE_EXTPOINTER_ if the OpenGL renderer should use OpenGL extensions via function pointers.
 /** On some systems there is no support for the dynamic extension of OpenGL
 	via function pointers such that this has to be undef'ed. */
+#ifdef _IRR_COMPILE_WITH_OPENGL_
 #if !defined(_IRR_OSX_PLATFORM_) && !defined(_IRR_SOLARIS_PLATFORM_)
 #define _IRR_OPENGL_USE_EXTPOINTER_
+#endif
 #endif
 
 //! Define _IRR_OGLES1_USE_EXTPOINTER_ if the OpenGL-ES 1.x driver should use extensions via function pointers.

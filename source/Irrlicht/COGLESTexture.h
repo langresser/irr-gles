@@ -18,9 +18,7 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 #else
-
-#include <EGL/egl.h>
-#include <GLES/gl.h>
+#include <GLES/egl.h>
 #endif
 
 namespace irr

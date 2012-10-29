@@ -16,6 +16,7 @@
 #include "SIrrCreationParameters.h"
 
 #ifdef _IRR_COMPILE_WITH_OGLES1_
+
 #include "CNullDriver.h"
 #include "IMaterialRendererServices.h"
 #include "EDriverFeatures.h"
@@ -29,10 +30,12 @@
 #include <GLES/gl.h>
 #include "android_native_app_glue.h"
 #else
-#include <EGL/egl.h>
+#include <GLES/egl.h>
 #include <GLES/gl.h>
 #endif
-
+#ifdef _MSC_VER
+	#pragma comment(lib, "libgles_cm.lib")
+#endif
 #include "COGLESExtensionHandler.h"
 
 namespace irr
@@ -58,8 +61,8 @@ namespace video
 	
 #if defined(_IRR_COMPILE_WITH_IPHONE_DEVICE_)
 		COGLES1Driver(const SIrrlichtCreationParameters& params,
-				const SExposedVideoData& data,
-				io::IFileSystem* io, MIrrIPhoneDevice const & device);
+                const SExposedVideoData& data,
+                io::IFileSystem* io, CIrrDeviceIPhone* device);
 #endif
 
 		//! destructor
@@ -387,7 +390,7 @@ namespace video
 		HDC HDc;
 #endif
 #if defined(_IRR_COMPILE_WITH_IPHONE_DEVICE_)
-		MIrrIPhoneDevice Device;
+		CIrrDeviceIPhone* Device;
 		GLuint ViewFramebuffer;
 		GLuint ViewRenderbuffer;
 		GLuint ViewDepthRenderbuffer;

@@ -17,10 +17,6 @@
 #include "COpenGLParallaxMapRenderer.h"
 #include "os.h"
 
-#ifdef _MSC_VER
-#pragma comment(lib, "OpenGL32.lib")
-#endif
-
 #ifdef _IRR_COMPILE_WITH_SDL_DEVICE_
 #include <SDL/SDL.h>
 #endif
@@ -659,8 +655,7 @@ COpenGLDriver::~COpenGLDriver()
 bool COpenGLDriver::genericDriverInit()
 {
 	Name=L"OpenGL ";
-	const GLubyte* name = glGetString(GL_VERSION);
-	Name.append(name);
+	Name.append(glGetString(GL_VERSION));
 	s32 pos=Name.findNext(L' ', 7);
 	if (pos != -1)
 		Name=Name.subString(0, pos);

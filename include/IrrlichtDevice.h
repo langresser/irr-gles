@@ -169,10 +169,6 @@ namespace irr
 		\endcode
 		\return True if window is active. */
 		virtual bool isWindowActive() const = 0;
-        
-#ifndef WIN32
-        virtual void setWindowActive(bool active) = 0;
-#endif
 
 		//! Checks if the Irrlicht window has focus
 		/** \return True if window has focus. */
@@ -249,6 +245,30 @@ namespace irr
 				is defined, false if joysticks are not supported or support is compiled out.
 		*/
 		virtual bool activateJoysticks(core::array<SJoystickInfo>& joystickInfo) =0;
+        
+        //! Activate accelerometer.
+        virtual bool activateAccelerometer(float updateInterval = 0.016666f) = 0;
+        
+        //! Deactivate accelerometer.
+        virtual bool deactivateAccelerometer() = 0;
+        
+        //! Is accelerometer active.
+        virtual bool isAccelerometerActive() = 0;
+        
+        //! Is accelerometer available.
+        virtual bool isAccelerometerAvailable() = 0;
+
+        //! Activate gyroscope.
+        virtual bool activateGyroscope(float updateInterval = 0.016666f) = 0;
+        
+        //! Deactivate gyroscope.
+        virtual bool deactivateGyroscope() = 0;
+        
+        //! Is gyroscope active.
+        virtual bool isGyroscopeActive() = 0;
+        
+        //! Is gyroscope available.
+        virtual bool isGyroscopeAvailable() = 0;
 
 		//! Set the current Gamma Value for the Display
 		virtual bool setGammaRamp(f32 red, f32 green, f32 blue,
@@ -335,3 +355,4 @@ namespace irr
 } // end namespace irr
 
 #endif
+

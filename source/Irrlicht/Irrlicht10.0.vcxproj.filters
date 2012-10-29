@@ -55,6 +55,9 @@
     <Filter Include="Irrlicht\video\OpenGL">
       <UniqueIdentifier>{834213c7-9515-49de-aa27-8d3ed9c0c87a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Irrlicht\video\Direct3D8">
+      <UniqueIdentifier>{19838bc4-396f-4d23-ad1b-3bb652e33e6d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Irrlicht\video\Null">
       <UniqueIdentifier>{a9ca9d4d-7678-4687-b78b-15236c0dcf53}</UniqueIdentifier>
     </Filter>
@@ -63,6 +66,9 @@
     </Filter>
     <Filter Include="Irrlicht\video\Null\Loader">
       <UniqueIdentifier>{e2571a61-945c-4509-b47c-daea464916ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Irrlicht\video\Direct3D9">
+      <UniqueIdentifier>{1354e9fa-cea6-461e-af7f-9940bb5f0a2f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Irrlicht\video\Burning Video">
       <UniqueIdentifier>{ac7af7ba-0e6b-4da4-a695-a0070a4da974}</UniqueIdentifier>
@@ -870,6 +876,24 @@
     <ClInclude Include="wglext.h">
       <Filter>Irrlicht\video\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="CD3D8Driver.h">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D8MaterialRenderer.h">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D8NormalMapRenderer.h">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D8ParallaxMapRenderer.h">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D8ShaderMaterialRenderer.h">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D8Texture.h">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClInclude>
     <ClInclude Include="CColorConverter.h">
       <Filter>Irrlicht\video\Null</Filter>
     </ClInclude>
@@ -935,6 +959,27 @@
     </ClInclude>
     <ClInclude Include="CImageLoaderWAL.h">
       <Filter>Irrlicht\video\Null\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D9Driver.h">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D9HLSLMaterialRenderer.h">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D9MaterialRenderer.h">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D9NormalMapRenderer.h">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D9ParallaxMapRenderer.h">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D9ShaderMaterialRenderer.h">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="CD3D9Texture.h">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
     </ClInclude>
     <ClInclude Include="CDepthBuffer.h">
       <Filter>Irrlicht\video\Burning Video</Filter>
@@ -1616,6 +1661,21 @@
     <ClCompile Include="COpenGLTexture.cpp">
       <Filter>Irrlicht\video\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="CD3D8Driver.cpp">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D8NormalMapRenderer.cpp">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D8ParallaxMapRenderer.cpp">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D8ShaderMaterialRenderer.cpp">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D8Texture.cpp">
+      <Filter>Irrlicht\video\Direct3D8</Filter>
+    </ClCompile>
     <ClCompile Include="CColorConverter.cpp">
       <Filter>Irrlicht\video\Null</Filter>
     </ClCompile>
@@ -1678,6 +1738,24 @@
     </ClCompile>
     <ClCompile Include="CImageLoaderWAL.cpp">
       <Filter>Irrlicht\video\Null\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D9Driver.cpp">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D9HLSLMaterialRenderer.cpp">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D9NormalMapRenderer.cpp">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D9ParallaxMapRenderer.cpp">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D9ShaderMaterialRenderer.cpp">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="CD3D9Texture.cpp">
+      <Filter>Irrlicht\video\Direct3D9</Filter>
     </ClCompile>
     <ClCompile Include="CBurningShader_Raster_Reference.cpp">
       <Filter>Irrlicht\video\Burning Video</Filter>
@@ -2221,9 +2299,6 @@
     </ClCompile>
     <ClCompile Include="CSMFMeshFileLoader.cpp">
       <Filter>Irrlicht\scene\loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="iOS\platform_util.cpp">
-      <Filter>Irrlicht</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

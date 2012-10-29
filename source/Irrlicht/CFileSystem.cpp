@@ -105,10 +105,6 @@ CFileSystem::~CFileSystem()
 //! opens a file for read access
 IReadFile* CFileSystem::createAndOpenFile(const io::path& filename)
 {
-	if (!existFile(filename)) {
-		return NULL;
-	}
-
 	IReadFile* file = 0;
 	u32 i;
 
@@ -1066,3 +1062,4 @@ IAttributes* CFileSystem::createEmptyAttributes(video::IVideoDriver* driver)
 
 } // end namespace irr
 } // end namespace io
+

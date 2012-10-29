@@ -197,7 +197,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\stk</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\bin\Win32-VisualStudio\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\bin\Win64-VisualStudio\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\bin\Win32-VisualStudio\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\bin\Win64-VisualStudio\</OutDir>
@@ -307,8 +307,8 @@
       <TypeLibraryName>.\..\Debug/Irrlicht.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;zlib;E:\llvm\3rdframework\opengles\include;F:\devlib\DirectX9.0c\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;IRRLICHT_EXPORTS;_USRDLL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\include;zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IRRLICHT_EXPORTS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions); _ITERATOR_DEBUG_LEVEL=0</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -327,14 +327,14 @@
     </ProjectReference>
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\..\stk\Irrlicht.dll</OutputFile>
-      <AdditionalLibraryDirectories>E:\llvm\3rdframework\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\bin\Win32-visualstudio\Irrlicht.dll</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libci.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>E:\llvm\stk\dependencies\lib\Irrlicht.lib</ImportLibrary>
+      <ImportLibrary>..\..\lib\Win32-visualstudio\Irrlicht.lib</ImportLibrary>
       <Version>1.8.0.alpha</Version>
     </Link>
   </ItemDefinitionGroup>
@@ -1097,6 +1097,12 @@
     <ClInclude Include="COpenGLTexture.h" />
     <ClInclude Include="glext.h" />
     <ClInclude Include="wglext.h" />
+    <ClInclude Include="CD3D8Driver.h" />
+    <ClInclude Include="CD3D8MaterialRenderer.h" />
+    <ClInclude Include="CD3D8NormalMapRenderer.h" />
+    <ClInclude Include="CD3D8ParallaxMapRenderer.h" />
+    <ClInclude Include="CD3D8ShaderMaterialRenderer.h" />
+    <ClInclude Include="CD3D8Texture.h" />
     <ClInclude Include="CColorConverter.h" />
     <ClInclude Include="CFPSCounter.h" />
     <ClInclude Include="CImage.h" />
@@ -1119,6 +1125,13 @@
     <ClInclude Include="CImageLoaderRGB.h" />
     <ClInclude Include="CImageLoaderTGA.h" />
     <ClInclude Include="CImageLoaderWAL.h" />
+    <ClInclude Include="CD3D9Driver.h" />
+    <ClInclude Include="CD3D9HLSLMaterialRenderer.h" />
+    <ClInclude Include="CD3D9MaterialRenderer.h" />
+    <ClInclude Include="CD3D9NormalMapRenderer.h" />
+    <ClInclude Include="CD3D9ParallaxMapRenderer.h" />
+    <ClInclude Include="CD3D9ShaderMaterialRenderer.h" />
+    <ClInclude Include="CD3D9Texture.h" />
     <ClInclude Include="CDepthBuffer.h" />
     <ClInclude Include="CSoftware2MaterialRenderer.h" />
     <ClInclude Include="CSoftwareDriver2.h" />
@@ -1341,6 +1354,11 @@
     <ClCompile Include="COpenGLShaderMaterialRenderer.cpp" />
     <ClCompile Include="COpenGLSLMaterialRenderer.cpp" />
     <ClCompile Include="COpenGLTexture.cpp" />
+    <ClCompile Include="CD3D8Driver.cpp" />
+    <ClCompile Include="CD3D8NormalMapRenderer.cpp" />
+    <ClCompile Include="CD3D8ParallaxMapRenderer.cpp" />
+    <ClCompile Include="CD3D8ShaderMaterialRenderer.cpp" />
+    <ClCompile Include="CD3D8Texture.cpp" />
     <ClCompile Include="CColorConverter.cpp" />
     <ClCompile Include="CFPSCounter.cpp" />
     <ClCompile Include="CImage.cpp" />
@@ -1362,6 +1380,12 @@
     <ClCompile Include="CImageLoaderRGB.cpp" />
     <ClCompile Include="CImageLoaderTGA.cpp" />
     <ClCompile Include="CImageLoaderWAL.cpp" />
+    <ClCompile Include="CD3D9Driver.cpp" />
+    <ClCompile Include="CD3D9HLSLMaterialRenderer.cpp" />
+    <ClCompile Include="CD3D9NormalMapRenderer.cpp" />
+    <ClCompile Include="CD3D9ParallaxMapRenderer.cpp" />
+    <ClCompile Include="CD3D9ShaderMaterialRenderer.cpp" />
+    <ClCompile Include="CD3D9Texture.cpp" />
     <ClCompile Include="CBurningShader_Raster_Reference.cpp" />
     <ClCompile Include="CDepthBuffer.cpp" />
     <ClCompile Include="CSoftwareDriver2.cpp" />
@@ -1389,7 +1413,6 @@
     <ClCompile Include="IBurningShader.cpp" />
     <ClCompile Include="CLogger.cpp" />
     <ClCompile Include="COSOperator.cpp" />
-    <ClCompile Include="iOS\platform_util.cpp" />
     <ClCompile Include="Irrlicht.cpp" />
     <ClCompile Include="os.cpp" />
     <ClCompile Include="lzma\LzmaDec.c" />
