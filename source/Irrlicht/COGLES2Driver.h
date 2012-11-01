@@ -36,10 +36,6 @@
 #include "EDriverFeatures.h"
 #include "fast_atof.h"
 
-#ifdef _MSC_VER
-#pragma comment(lib, "libEGL.lib")
-#pragma comment(lib, "libGLESv2.lib")
-#endif
 #include "COGLES2ExtensionHandler.h"
 
 namespace irr
@@ -237,6 +233,9 @@ namespace video
 		virtual void setBasicRenderStates(const SMaterial& material,
 				const SMaterial& lastmaterial,
 				bool resetAllRenderstates);
+
+		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+		virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count);
 
 		//! Sets a vertex shader constant.
 		virtual void setVertexShaderConstant(const f32* data, s32 startRegister, s32 constantAmount = 1);

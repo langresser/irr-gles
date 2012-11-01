@@ -30,6 +30,9 @@ namespace video
 		void useAlphaTest( bool param );
 		void setAlphaTestValue( float param );
 		void setOrthoMatrix( const core::matrix4& matrix );
+
+		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+		virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count);
 	private :
 		bool UseTexture;
 		bool UseAlphaTest;

@@ -63,6 +63,9 @@ namespace video
 		//! Returns if the material is transparent.
 		virtual bool isTransparent() const;
 
+		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+		virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count);
+
 		// implementations for the render services
 		virtual void setBasicRenderStates(const SMaterial& material, const SMaterial& lastMaterial, bool resetAllRenderstates);
 		virtual bool setVertexShaderConstant(const c8* name, const f32* floats, int count);

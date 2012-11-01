@@ -6,6 +6,8 @@
 #define __C_OPEN_GL_FEATURE_MAP_H_INCLUDED__
 
 #include "IrrCompileConfig.h"
+#define _IRR_OPENGL_USE_EXTPOINTER_
+
 #ifdef _IRR_COMPILE_WITH_OPENGL_
 
 #include "EDriverFeatures.h"
@@ -22,6 +24,99 @@
 	#include <GL/gl.h>
 	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
 		#include "glext.h"
+	#else
+		typedef ptrdiff_t GLintptrARB;
+		typedef ptrdiff_t GLsizeiptrARB;
+		#define GL_SMOOTH_LINE_WIDTH_RANGE        0x0B22
+		#define GL_SMOOTH_LINE_WIDTH_GRANULARITY  0x0B23
+		#define GL_ALIASED_LINE_WIDTH_RANGE       0x846E
+		#define GL_ALIASED_POINT_SIZE_RANGE       0x846D
+		#define GL_SMOOTH_POINT_SIZE_RANGE        0x0B12
+
+		#define GL_UNSIGNED_SHORT_1_5_5_5_REV     0x8366
+		#define GL_UNSIGNED_SHORT_5_6_5           0x8363
+		#define GL_UNSIGNED_INT_8_8_8_8_REV       0x8367
+
+		#define GL_CLAMP_TO_EDGE                  0x812F
+		#define GL_BGR                            0x80E0
+		#define GL_BGRA                           0x80E1
+
+		#define GL_MULTISAMPLE_ARB                0x809D
+		#define GL_TEXTURE2_ARB                   0x84C2
+		#define GL_TABLE_TOO_LARGE                0x8031
+		#define GL_SAMPLE_ALPHA_TO_COVERAGE_ARB   0x809E
+
+		#define GL_DEPTH_COMPONENT16              0x81A5
+		#define GL_DEPTH_COMPONENT24              0x81A6
+		#define GL_DEPTH_COMPONENT32              0x81A7
+
+		#define GL_TANGENT_ARRAY_EXT              0x8439
+		#define GL_BINORMAL_ARRAY_EXT             0x843A
+		#define GL_CURRENT_TANGENT_EXT            0x843B
+		#define GL_CURRENT_BINORMAL_EXT           0x843C
+		#define GL_TANGENT_ARRAY_TYPE_EXT         0x843E
+		#define GL_TANGENT_ARRAY_STRIDE_EXT       0x843F
+		#define GL_BINORMAL_ARRAY_TYPE_EXT        0x8440
+		#define GL_BINORMAL_ARRAY_STRIDE_EXT      0x8441
+		#define GL_TANGENT_ARRAY_POINTER_EXT      0x8442
+		#define GL_BINORMAL_ARRAY_POINTER_EXT     0x8443
+		#define GL_MAP1_TANGENT_EXT               0x8444
+		#define GL_MAP2_TANGENT_EXT               0x8445
+		#define GL_MAP1_BINORMAL_EXT              0x8446
+		#define GL_MAP2_BINORMAL_EXT              0x8447
+
+		#define GL_COMBINE_EXT                    0x8570
+		#define GL_COMBINE_RGB_EXT                0x8571
+		#define GL_COMBINE_ALPHA_EXT              0x8572
+		#define GL_RGB_SCALE_EXT                  0x8573
+		#define GL_ADD_SIGNED_EXT                 0x8574
+		#define GL_INTERPOLATE_EXT                0x8575
+		#define GL_CONSTANT_EXT                   0x8576
+		#define GL_PRIMARY_COLOR_EXT              0x8577
+		#define GL_PREVIOUS_EXT                   0x8578
+		#define GL_SOURCE0_RGB_EXT                0x8580
+		#define GL_SOURCE1_RGB_EXT                0x8581
+		#define GL_SOURCE2_RGB_EXT                0x8582
+		#define GL_SOURCE0_ALPHA_EXT              0x8588
+		#define GL_SOURCE1_ALPHA_EXT              0x8589
+		#define GL_SOURCE2_ALPHA_EXT              0x858A
+		#define GL_OPERAND0_RGB_EXT               0x8590
+		#define GL_OPERAND1_RGB_EXT               0x8591
+		#define GL_OPERAND2_RGB_EXT               0x8592
+		#define GL_OPERAND0_ALPHA_EXT             0x8598
+		#define GL_OPERAND1_ALPHA_EXT             0x8599
+		#define GL_OPERAND2_ALPHA_EXT             0x859A
+
+		#define GL_COMBINE_ARB                    0x8570
+		#define GL_COMBINE_RGB_ARB                0x8571
+		#define GL_COMBINE_ALPHA_ARB              0x8572
+		#define GL_SOURCE0_RGB_ARB                0x8580
+		#define GL_SOURCE1_RGB_ARB                0x8581
+		#define GL_SOURCE2_RGB_ARB                0x8582
+		#define GL_SOURCE0_ALPHA_ARB              0x8588
+		#define GL_SOURCE1_ALPHA_ARB              0x8589
+		#define GL_SOURCE2_ALPHA_ARB              0x858A
+		#define GL_OPERAND0_RGB_ARB               0x8590
+		#define GL_OPERAND1_RGB_ARB               0x8591
+		#define GL_OPERAND2_RGB_ARB               0x8592
+		#define GL_OPERAND0_ALPHA_ARB             0x8598
+		#define GL_OPERAND1_ALPHA_ARB             0x8599
+		#define GL_OPERAND2_ALPHA_ARB             0x859A
+		#define GL_RGB_SCALE_ARB                  0x8573
+		#define GL_ADD_SIGNED_ARB                 0x8574
+		#define GL_INTERPOLATE_ARB                0x8575
+		#define GL_SUBTRACT_ARB                   0x84E7
+		#define GL_CONSTANT_ARB                   0x8576
+		#define GL_PRIMARY_COLOR_ARB              0x8577
+		#define GL_PREVIOUS_ARB                   0x8578
+
+		#define GL_TEXTURE0_ARB                   0x84C0
+		#define GL_TEXTURE1_ARB                   0x84C1
+
+		#define GL_INTERPOLATE                    0x8575
+		#define GL_SUBTRACT                       0x84E7
+		#define GL_CONSTANT                       0x8576
+		#define GL_PRIMARY_COLOR                  0x8577
 	#endif
 	#include "wglext.h"
 
@@ -1260,7 +1355,9 @@ inline void COpenGLExtensionHandler::extGlActiveTexture(GLenum texture)
 #ifdef GL_ARB_multitexture
 		glActiveTextureARB(texture);
 #else
-		glActiveTexture(texture);
+// TODO wj modify
+//		glActiveTexture(texture);
+	{}
 #endif
 #endif
 }
@@ -1271,8 +1368,11 @@ inline void COpenGLExtensionHandler::extGlClientActiveTexture(GLenum texture)
 	if (MultiTextureExtension && pGlClientActiveTextureARB)
 		pGlClientActiveTextureARB(texture);
 #else
+#if 0
+	// TODO wj modify
 	if (MultiTextureExtension)
 		glClientActiveTextureARB(texture);
+#endif
 #endif
 }
 
@@ -2522,6 +2622,8 @@ inline void COpenGLExtensionHandler::extGlGetQueryObjectuiv(GLuint id, GLenum pn
 
 inline void COpenGLExtensionHandler::extGlSwapInterval(int interval)
 {
+#if 0
+	// TODO wj modify
 	// we have wglext, so try to use that
 #if defined(_IRR_WINDOWS_API_) && defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_)
 #ifdef WGL_EXT_swap_control
@@ -2556,6 +2658,7 @@ inline void COpenGLExtensionHandler::extGlSwapInterval(int interval)
 		pGlxSwapIntervalMESA(interval);
 #else
 	pGlXSwapIntervalMESA(interval);
+#endif
 #endif
 #endif
 #endif

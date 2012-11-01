@@ -91,6 +91,16 @@ namespace video
 			BaseMaterial->drop();
 	}
 
+	bool COGLES2SLMaterialRenderer::setVertexShaderConstant(const c8* name, const bool* bools, int count)
+	{
+		return false;
+	}
+
+	bool COGLES2SLMaterialRenderer::setPixelShaderConstant(const c8* name, const bool* bools, int count)
+	{
+		return false;
+	}
+
 	bool COGLES2SLMaterialRenderer::init(s32& outMaterialTypeNr,
 			const c8* vertexShaderProgram,
 			const c8* pixelShaderProgram,

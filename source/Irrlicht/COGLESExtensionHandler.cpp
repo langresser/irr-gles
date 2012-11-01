@@ -6,11 +6,15 @@
 #include "IrrCompileConfig.h"
 
 #ifdef _IRR_COMPILE_WITH_OGLES1_
-
 #include "COGLESExtensionHandler.h"
 #include "COGLESDriver.h"
 #include "fast_atof.h"
 #include "irrString.h"
+
+#ifdef _IRR_WINDOWS_EMU
+#pragma comment(lib, "libEGL.lib")
+#pragma comment(lib, "libGLESv1_CM.lib")
+#endif
 
 namespace irr
 {

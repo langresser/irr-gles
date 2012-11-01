@@ -37,6 +37,8 @@ namespace video
 		void bindTexture();
 		virtual bool OnRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype);
 
+		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+		virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count);
 	public:
 		/*void enableNormalize() {Normalize = true;}
 		void disableNormalize() {Normalize = false;}*/

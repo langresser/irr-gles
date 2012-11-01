@@ -33,9 +33,6 @@
 #include <GLES/egl.h>
 #include <GLES/gl.h>
 #endif
-#ifdef _MSC_VER
-	#pragma comment(lib, "libgles_cm.lib")
-#endif
 #include "COGLESExtensionHandler.h"
 
 namespace irr
@@ -236,6 +233,9 @@ namespace video
 		//! Sets a constant for the vertex shader based on a name.
 		virtual bool setVertexShaderConstant(const c8* name, const f32* floats, int count);
         
+		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+		virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count);
+
 		//! Int interface for the above.
 		virtual bool setVertexShaderConstant(const c8* name, const s32* ints, int count);
         

@@ -30,6 +30,9 @@ namespace video
 		//! Destructor
 		virtual ~COGLES2NormalMapRenderer();
 
+		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+		virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count);
+
 		//! Called by the engine when the vertex and/or pixel shader constants for an
 		//! material renderer should be set.
 		virtual void OnSetConstants(IMaterialRendererServices* services, s32 userData);

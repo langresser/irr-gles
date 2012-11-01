@@ -38,7 +38,8 @@ namespace video
 		virtual void OnSetMaterial( const video::SMaterial& material,
 									const video::SMaterial& lastMaterial,
 									bool resetAllRenderstates, video::IMaterialRendererServices* services );
-
+		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+		virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count);
 	protected:
 
 		bool CompiledShaders;

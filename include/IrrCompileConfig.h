@@ -19,6 +19,7 @@
 //! The defines for different operating system are:
 //! _IRR_XBOX_PLATFORM_ for XBox
 //! _IRR_WINDOWS_ for all irrlicht supported Windows versions
+//! _IRR_WINDOWS_EMU	windows platform but use gles emu
 //! _IRR_WINDOWS_CE_PLATFORM_ for Windows CE
 //! _IRR_WINDOWS_API_ for Windows or XBox
 //! _IRR_LINUX_PLATFORM_ for Linux (it is defined here if no other os is defined)
@@ -72,27 +73,24 @@
 	#include <xtl.h>
 #endif
 
-#if defined(__APPLE__) || defined(MACOSX)
-#if !defined(MACOSX)
-#define MACOSX // legacy support
-#endif
+#if defined(__APPLE__)
 #define _IRR_OSX_PLATFORM_
 
 #if defined(__ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__) || defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-#define _IRR_IPHONE_PLATFORM_
-#define _IRR_COMPILE_WITH_IPHONE_DEVICE_
-#define _IRR_COMPILE_WITH_OGLES1_
-#define _IRR_COMPILE_WITH_OGLES2_
+	#define _IRR_IPHONE_PLATFORM_
+	#define _IRR_COMPILE_WITH_IPHONE_DEVICE_
+	#define _IRR_COMPILE_WITH_OGLES1_
+	#define _IRR_COMPILE_WITH_OGLES2_
 #else
-#define _IRR_COMPILE_WITH_OSX_DEVICE_
+	#define _IRR_COMPILE_WITH_OSX_DEVICE_
 #endif
 #endif
 
 #if defined(_IRR_ANDROID_PLATFORM_)
-#define _IRR_COMPILE_WITH_ANDROID_DEVICE_
-#define _IRR_COMPILE_WITH_OGLES1_
-#define _IRR_COMPILE_WITH_OGLES2_
-#define _IRR_COMPILE_ANDROID_ASSET_READER_
+	#define _IRR_COMPILE_WITH_ANDROID_DEVICE_
+	#define _IRR_COMPILE_WITH_OGLES1_
+	#define _IRR_COMPILE_WITH_OGLES2_
+	#define _IRR_COMPILE_ANDROID_ASSET_READER_
 #endif
 
 //! Define _IRR_COMPILE_WITH_JOYSTICK_SUPPORT_ if you want joystick events.
@@ -103,9 +101,24 @@
 
 #if !defined(_IRR_IPHONE_PLATFORM_) && !defined(_IRR_ANDROID_PLATFORM_)
 #define _IRR_COMPILE_WITH_OPENGL_
-#define _IRR_OPENGL_USE_EXTPOINTER_
+//#define _IRR_OPENGL_USE_EXTPOINTER_
 #endif
 
+#ifdef _IRR_WINDOWS_
+//#define _IRR_WINDOWS_EMU
+#endif
+
+#ifdef _IRR_WINDOWS_EMU
+	#undef _IRR_COMPILE_WITH_OPENGL_
+
+	#define _IRR_COMPILE_WITH_OGLES1_
+	#define _IRR_COMPILE_WITH_OGLES2_
+#else
+	#if !defined(_IRR_IPHONE_PLATFORM_)
+	#define _IRR_OGLES1_USE_EXTPOINTER_
+	#define _IRR_OGLES2_USE_EXTPOINTER_
+	#endif
+#endif
 
 // #define _IRR_COMPILE_WITH_OGLES1_
 // #define _IRR_COMPILE_WITH_OGLES2_
@@ -113,19 +126,14 @@
 #define IRR_OGLES2_SHADER_PATH "../../media/Shaders/"
 #endif
 
-#if !defined(_IRR_IPHONE_PLATFORM_)
-#define _IRR_OGLES1_USE_EXTPOINTER_
-#define _IRR_OGLES2_USE_EXTPOINTER_
-#endif
-
 //! Define _IRR_COMPILE_WITH_SOFTWARE_ to compile the Irrlicht engine with software driver
 /** If you do not need the software driver, or want to use Burning's Video instead,
 comment this define out */
-#define _IRR_COMPILE_WITH_SOFTWARE_
+//#define _IRR_COMPILE_WITH_SOFTWARE_
 
 //! Define _IRR_COMPILE_WITH_BURNINGSVIDEO_ to compile the Irrlicht engine with Burning's video driver
 /** If you do not need this software driver, you can comment this define out. */
-#define _IRR_COMPILE_WITH_BURNINGSVIDEO_
+//#define _IRR_COMPILE_WITH_BURNINGSVIDEO_
 
 
 //! Define _IRR_COMPILE_WITH_GUI_ to compile the engine with the built-in GUI
@@ -310,7 +318,7 @@ B3D, MS3D or X meshes */
 #define _IRR_COMPILE_WITH_PPM_LOADER_
 
 //! Define _IRR_COMPILE_WITH_PSD_LOADER_ if you want to load .psd files
-#define _IRR_COMPILE_WITH_PSD_LOADER_
+//#define _IRR_COMPILE_WITH_PSD_LOADER_
 
 //! Define _IRR_COMPILE_WITH_DDS_LOADER_ if you want to load .dds files
 // Outcommented because

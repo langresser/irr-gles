@@ -9,6 +9,9 @@
 #include "IrrCompileConfig.h"
 
 #ifdef _IRR_COMPILE_WITH_OGLES1_
+#define GL_GLEXT_PROTOTYPES 1
+#define GLX_GLXEXT_PROTOTYPES 1
+
 #if defined(_IRR_COMPILE_WITH_IPHONE_DEVICE_)
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES1/glext.h>
@@ -19,10 +22,11 @@
 #else
 #include <GLES/egl.h>
 #include <GLES/gl.h>
+//#include <GLES/glext.h>
 // seems to be missing...
 typedef char GLchar;
 #if defined(_IRR_OGLES1_USE_EXTPOINTER_)
-#include "gles-ext.h"
+//#include "gles-ext.h"
 #endif
 #endif
 #include "os.h"

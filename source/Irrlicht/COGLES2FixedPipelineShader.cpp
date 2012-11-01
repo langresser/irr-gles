@@ -15,6 +15,15 @@ namespace irr
 {
 namespace video
 {
+	bool COGLES2FixedPipelineShader::setVertexShaderConstant(const c8* name, const bool* bools, int count)
+	{
+		return false;
+	}
+
+	bool COGLES2FixedPipelineShader::setPixelShaderConstant(const c8* name, const bool* bools, int count)
+	{
+		return false;
+	}
 
 	const char* const COGLES2FixedPipelineShader::sBuiltInShaderUniformNames[] =
 	{

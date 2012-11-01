@@ -2864,6 +2864,16 @@ void COGLES1Driver::setVertexShaderConstant(const f32* data, s32 startRegister, 
 #endif
 }
 
+bool COGLES1Driver::setVertexShaderConstant(const c8* name, const bool* bools, int count)
+{
+	return false;
+}
+
+bool COGLES1Driver::setPixelShaderConstant(const c8* name, const bool* bools, int count)
+{
+	return false;
+}
+
 //! Sets a pixel shader constant.
 void COGLES1Driver::setPixelShaderConstant(const f32* data, s32 startRegister, s32 constantAmount)
 {

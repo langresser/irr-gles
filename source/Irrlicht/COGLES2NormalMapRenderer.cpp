@@ -20,6 +20,15 @@ namespace irr
 {
 namespace video
 {
+	bool COGLES2NormalMapRenderer::setVertexShaderConstant(const c8* name, const bool* bools, int count)
+	{
+		return false;
+	}
+
+	bool COGLES2NormalMapRenderer::setPixelShaderConstant(const c8* name, const bool* bools, int count)
+	{
+		return false;
+	}
 
 	const char* const COGLES2NormalMapRenderer::sBuiltInShaderUniformNames[] =
 	{
