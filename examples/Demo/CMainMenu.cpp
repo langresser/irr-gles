@@ -17,8 +17,8 @@ bool CMainMenu::run(bool& outFullscreen, bool& outMusic, bool& outShadows,
 			video::E_DRIVER_TYPE& outDriver)
 {
 	//video::E_DRIVER_TYPE driverType = video::EDT_DIRECT3D9;
-	//video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
-	video::E_DRIVER_TYPE driverType = video::EDT_BURNINGSVIDEO;
+	video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
+	//video::E_DRIVER_TYPE driverType = video::EDT_BURNINGSVIDEO;
 	//video::E_DRIVER_TYPE driverType = video::EDT_SOFTWARE;
 
 	MenuDevice = createDevice(driverType,

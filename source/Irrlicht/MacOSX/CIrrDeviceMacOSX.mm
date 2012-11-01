@@ -462,6 +462,11 @@ long GetDictionaryLong(CFDictionaryRef theDict, const void* key)
 	return value;
 }
 
+
+NSOpenGLContext *OGLContext = NULL;
+NSBitmapImageRep *SoftwareDriverTarget = NULL;
+NSWindow *Window = NULL;
+
 namespace irr
 {
 	namespace video
@@ -476,8 +481,7 @@ namespace irr
 {
 //! constructor
 CIrrDeviceMacOSX::CIrrDeviceMacOSX(const SIrrlichtCreationParameters& param)
-	: CIrrDeviceStub(param), Window(NULL), CGLContext(NULL), OGLContext(NULL),
-	SoftwareDriverTarget(0), DeviceWidth(0), DeviceHeight(0),
+	: CIrrDeviceStub(param), CGLContext(NULL), DeviceWidth(0), DeviceHeight(0),
 	ScreenWidth(0), ScreenHeight(0), MouseButtonStates(0), SoftwareRendererType(0),
 	IsActive(true), IsFullscreen(false), IsShiftDown(false), IsControlDown(false), IsResizable(false)
 {

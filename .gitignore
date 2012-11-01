@@ -3,3 +3,7 @@
 .svn/
 Debug/
 obj/
+bin/
+source/Irrlicht/MacOSX/.DS_Store
+source/Irrlicht/MacOSX/MacOSX.xcodeproj/project.xcworkspace/
+source/Irrlicht/MacOSX/MacOSX.xcodeproj/xcuserdata/

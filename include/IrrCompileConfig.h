@@ -101,7 +101,6 @@
 
 #if !defined(_IRR_IPHONE_PLATFORM_) && !defined(_IRR_ANDROID_PLATFORM_)
 #define _IRR_COMPILE_WITH_OPENGL_
-//#define _IRR_OPENGL_USE_EXTPOINTER_
 #endif
 
 #ifdef _IRR_WINDOWS_

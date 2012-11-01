@@ -19,9 +19,9 @@
 #include <OpenGL/OpenGL.h>
 #include <map>
 
-class NSWindow;
-class NSOpenGLContext;
-class NSBitmapImageRep;
+//class NSWindow;
+//class NSOpenGLContext;
+//class NSBitmapImageRep;
 
 namespace irr
 {
@@ -225,10 +225,7 @@ namespace irr
 		void postKeyEvent(void *event, irr::SEvent &ievent, bool pressed);
 		void pollJoysticks();
 
-		NSWindow *Window;
 		CGLContextObj CGLContext;
-		NSOpenGLContext *OGLContext;
-		NSBitmapImageRep *SoftwareDriverTarget;
 		std::map<int,int> KeyCodes;
 		int DeviceWidth;
 		int DeviceHeight;

@@ -1,5 +1,4 @@
-#ifndef __glext_h_
-#define __glext_h_
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -5337,7 +5336,9 @@ typedef ptrdiff_t GLsizeiptrARB;
 #ifndef GL_ARB_shader_objects
 /* GL types for program/shader text and shader object handles */
 typedef char GLcharARB;
-typedef unsigned int GLhandleARB;
+#ifndef _IRR_OSX_PLATFORM_
+    typedef unsigned int GLhandleARB;
+#endif
 #endif
 
 /* GL type for "half" precision (s10e5) float data in host memory */
@@ -11485,4 +11486,3 @@ typedef void (APIENTRYP PFNGLMULTIDRAWELEMENTSINDIRECTAMDPROC) (GLenum mode, GLe
 }
 #endif
 
-#endif

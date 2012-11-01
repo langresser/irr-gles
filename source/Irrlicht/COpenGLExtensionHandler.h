@@ -6,7 +6,6 @@
 #define __C_OPEN_GL_FEATURE_MAP_H_INCLUDED__
 
 #include "IrrCompileConfig.h"
-#define _IRR_OPENGL_USE_EXTPOINTER_
 
 #ifdef _IRR_COMPILE_WITH_OPENGL_
 
@@ -15,6 +14,7 @@
 #include "os.h"
 
 #if defined(_IRR_WINDOWS_API_)
+    #define _IRR_OPENGL_USE_EXTPOINTER_
 	// include windows headers for HWND
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
@@ -2487,7 +2487,8 @@ inline void COpenGLExtensionHandler::extGlProgramParameteri(GLhandleARB program,
 #elif defined(GL_ARB_geometry_shader4)
 	glProgramParameteriARB(program, pname, value);
 #elif defined(GL_EXT_geometry_shader4)
-	glProgramParameteriEXT((long GLuint)program, pname, value);
+    // TODO wj modify
+	glProgramParameteriEXT(0, pname, value);
 #elif defined(GL_NV_geometry_program4) || defined(GL_NV_geometry_shader4)
 	glProgramParameteriNV(program, pname, value);
 #else
